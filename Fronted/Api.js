@@ -2,24 +2,31 @@ const express = require("express")
 const path = require('path')
 const bodyP = require('body-parser')
 const compiler = require('compilex')
+
 var option = { stats: true }
+compiler.init(option)
 
 const app = express()
 
-compiler.init(option)
-
 app.use(bodyP.json())
 app.use(express.json())
-app.use(express.static(path.join(__dirname)))
+app.use(express.static(path.join(__dirname, "public")));
 
 
-app.get("/", function (req, res) {
-    compiler.flush(function(){
-        console.log("delete");
-        
-    })
-    res.sendFile(path.join(__dirname, "index.html"))
+
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "public", "index.html"));
+});
+
+app.get("/ide", function (req, res) {
+    // compiler.flush(function () {
+    //     console.log("delete");
+
+    // })
+    res.sendFile(path.join(__dirname, "public","ide.html"))
 })
+
+
 app.post("/compiler", function (req, res) {
     const code = req.body.code
     const input = req.body.input
@@ -27,10 +34,10 @@ app.post("/compiler", function (req, res) {
     try {
         if (lang == "CPP") {
             if (!input) {
-                var envData = { OS: "windows", cmd: "g++", options:{timeout: 10000} };
+                var envData = { OS: "windows", cmd: "g++", options: { timeout: 10000 } };
                 compiler.compileCPP(envData, code, function (data) {
                     if (data.output) {
-                        res.send(data); 
+                        res.send(data);
                     }
                     else {
                         res.send({ output: "error" })
@@ -39,7 +46,7 @@ app.post("/compiler", function (req, res) {
                 });
             }
             else {
-                var envData = { OS: "windows", cmd: "g++",options:{timeout: 10000} };
+                var envData = { OS: "windows", cmd: "g++", options: { timeout: 10000 } };
                 compiler.compileCPPWithInput(envData, code, input, function (data) {
                     if (data.output) {
                         res.send(data)
@@ -52,7 +59,7 @@ app.post("/compiler", function (req, res) {
         }
         else if (lang == "java") {
             if (!input) {
-                var envData = { OS: "windows" };
+                var envData = { OS: "windows",options: { timeout: 10000 } };
                 compiler.compileJava(envData, code, function (data) {
                     if (data.output) {
                         res.send(data)
@@ -63,7 +70,7 @@ app.post("/compiler", function (req, res) {
                 });
             }
             else {
-                var envData = { OS: "windows" };
+                var envData = { OS: "windows" ,options: { timeout: 10000 }};
                 compiler.compileJavaWithInput(envData, code, input, function (data) {
                     if (data.output) {
                         res.send(data)
@@ -103,11 +110,7 @@ app.post("/compiler", function (req, res) {
     catch (e) {
         console.log("error")
     }
-
-    // var envData = { OS : "windows"}; 
-    // compiler.compilePython( envData , code , function(data){
-    //     res.send(data);
-    // });    
+    
 })
 
 app.listen(8000)
