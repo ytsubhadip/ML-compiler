@@ -1,0 +1,99 @@
+body {
+    min-height: 100vh;
+}
+
+/* Hero section */
+.hero-section {
+    background: linear-gradient(180deg, #121418 0%, #212529 45%, #212529 100%);
+}
+
+.hero-badge {
+    background-color: rgba(46, 200, 102, 0.15);
+    color: rgb(46, 200, 102);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    padding: 0.5em 1em;
+}
+
+.hero-subtitle {
+    max-width: 32rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media (min-width: 992px) {
+    .hero-subtitle {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+
+.hero-cta {
+    background-color: rgb(46, 200, 102);
+    border-color: rgb(46, 200, 102);
+}
+
+.hero-cta:hover,
+.hero-cta:focus {
+    background-color: rgb(38, 170, 87);
+    border-color: rgb(38, 170, 87);
+}
+
+.hero-features li {
+    font-size: 0.95rem;
+}
+
+/* Code preview card */
+.hero-code-card {
+    background-color: #1a1d23;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.hero-code-header,
+.hero-code-footer {
+    background-color: #15181e;
+    border: none;
+}
+
+.hero-code-footer {
+    font-family: "Outfit", sans-serif;
+}
+
+.hero-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.hero-code {
+    padding: 1.25rem 1.5rem;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: #e4e4e7;
+    background-color: #1e2229;
+    overflow-x: auto;
+}
+
+.hero-code code {
+    font-family: "Consolas", "Monaco", "Courier New", monospace;
+}
+
+/* Feature cards */
+.hero-feature-card {
+    background-color: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.hero-feature-card:hover {
+    background-color: rgba(46, 200, 102, 0.06);
+    border-color: rgba(46, 200, 102, 0.25);
+}
+
+.hero-feature-icon {
+    font-size: 2rem;
+    color: rgb(46, 200, 102);
+    display: block;
+}

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%;">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ML Compiler</title>
+  <link rel="icon" type="image/png" href="../magento-brands-solid-full.svg">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+  <link rel="stylesheet" href="codemirror-5.65.21/lib/codemirror.css">
+  <script src="codemirror-5.65.21/lib/codemirror.js"></script>
+  <script src="codemirror-5.65.21/mode/clike/clike.js"></script>
+  <!-- theme -->
+  <link rel="stylesheet" href="codemirror-5.65.21/theme/darcula.css">
+  <link rel="stylesheet" href="codemirror-5.65.21/theme/night.css">
+  <script src="codemirror-5.65.21/addon/edit/closebrackets.js"></script>
+  <script src="codemirror-5.65.21/mode/python/python.js"></script>
+  <link rel="stylesheet" href="style.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+    integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+</head>
+
+<body class="landing-page ">
+
+  <!-- navbar start -->
+  <nav class="navbar navbar-expand-lg " style="background-color: #121418;">
+    <div class="container-fluid">
+      <div>
+        <i class="fa-brands fa-magento" style="color: rgb(46, 200, 102); font-size:35px ;"></i>
+      </div>
+      <a class="navbar-brand text-light outfit" href="index.html" style="font-size: 1.5rem;">ML compiler</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 " style="margin-left: 70px;">
+          <li class="nav-item ">
+            <a class="nav-link active text-light" aria-current="page" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active text-light" aria-current="page" href="/ide">Online IDE</a>
+          </li>
+
+        </ul>
+
+        <div class="d-flex justify-content-between" style="gap: 40px; align-items: center;">
+          <i class="bi bi-brightness-low-fill text-white" style="font-size: 1.5rem;" id="dark-mode"></i>
+          <div class="user ">
+            <i class="bi bi-person-circle text-white" style="font-size: 2rem;"></i>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </nav>
+  <!-- navbar end -->
+
+  <div class="row gx-0">
+    <div class="col d-flex flex-column bg-dark px-4 question">
+      <!-- <div class="h-50">
+        <label for="input" class="text-light mt-4 mb-2">Input</label>
+        <textarea type="text" class="form-control h-75" id="input"></textarea>
+      </div>
+      -->
+      <div class="left-panel">
+        <h2>Problem Statement</h2>
+
+        <h3>Two Sum</h3>
+
+        <p>
+          Given an array of integers <b>nums</b> and an integer
+          <b>target</b>, return indices of the two numbers such that
+          they add up to target.
+        </p>
+
+        <h4>Example:</h4>
+        <pre>
+    Input: nums = [2,7,11,15], target = 9
+    Output: [0,1]
+    Explanation: nums[0] + nums[1] = 2 + 7 = 9
+    </pre>
+
+        <h4>Constraints:</h4>
+        <ul>
+          <li>2 ≤ nums.length ≤ 10⁴</li>
+          <li>-10⁹ ≤ nums[i] ≤ 10⁹</li>
+        </ul>
+      </div>
+
+    </div>
+
+
+    <div class="col px-0">
+      <div class="d-flex justify-content-between bg-dark p-2">
+
+        <div class="col-12 w-25 editor-nav">
+          <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
+          <select class="form-select" id="inlineFormSelectPref">
+            <option selected value="noL">Choose Language</option>
+            <option value="python">Python</option>
+            <option value="CPP">C++</option>
+            <option value="C">C</option>
+            <option value="java">Java</option>
+          </select>
+
+
+        </div>
+        <div class="d-flex" style="gap: 20px;">
+          <button type="button" class="btn btn-success d-flex" id="coderun">
+            Run Code
+            <!-- <i class="bi bi-alarm"></i> -->
+          </button>
+          <button type="button" class="btn btn-success d-flex " disabled>
+            Submit Code
+            <!-- <i class="bi bi-play-fill"></i> -->
+          </button>
+        </div>
+      </div>
+      <textarea type="text" class="form-control" id="editor"></textarea>
+      <div class="h-50 mt-2">
+        <label for="output" class="text-light mb-2">Output</label>
+        <textarea type="text" class="form-control h-50" id="output" readonly></textarea>
+      </div>
+    </div>
+
+
+  </div>
+
+</body>
+
+<script>
+
+  // codeMirror init
+  var editor = CodeMirror.fromTextArea(document.getElementById('editor'), {
+    mode: "text/x-c++src",
+    theme: "darcula",
+    lineNumbers: true,
+    autoCloseBrackets: true
+
+  })
+
+  // // dark mood
+  const theamBtn = document.getElementById('dark-mode')
+  theamBtn.addEventListener('click', function (e) {
+    console.log("dark button");
+    document.querySelector('body').style.background = "#ffff"
+
+  }, false)
+
+
+  // windows width fix
+  var width = window.innerWidth
+  editor.setSize(0.6 * width, "400")
+
+  // change according to language choose by user
+  var optionL = document.getElementById('inlineFormSelectPref')
+  optionL.addEventListener('change', function (e) {
+
+    console.log(optionL.value)
+    if (optionL.value == 'python') {
+      editor.setOption("mode", "text/x-python")
+      editor.setValue("print('Hello world')")
+    }
+
+    else if (optionL.value == 'CPP') {
+      editor.setOption("mode", "text/x-c++src")
+      editor.setValue(`#include <iostream>
+using namespace std;
+int main() {
+  cout << "Hello world";
+  return 0;
+}`);
+    }
+
+    else if (optionL.value == 'C') {
+      editor.setOption("mode", "text/x-csrc")
+      editor.setValue(`#include <stdio.h>
+int main() {
+  printf("%s","hello, world");
+  return 0;
+}`);
+    }
+
+    else if (optionL.value == 'java') {
+      editor.setOption("mode", "text/x-java")
+      editor.setValue(`public class Main {
+public static void main(String[] args) {
+System.out.println("Hello World");
+}
+}`);
+    }
+
+  })
+
+  // run button function
+  var code
+  document.getElementById("coderun").addEventListener('click', async function (e) {
+
+    console.log(optionL.value)
+
+    if (optionL.value == "noL") {
+      alert("Please choose Language")
+      return;
+    }
+    const input = document.getElementById('input')
+    const output = document.getElementById('output')
+    output.value = "Compiling...."
+    code = {
+      code: editor.getValue(),
+      input: undefined,
+      lang: optionL.value
+    }
+    var oData = await fetch("http://localhost:8000/compiler", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(code)
+    })
+    var con = await oData.json()
+    output.value = con.output
+    input.value = " "
+
+
+  }, false)
+
+</script>
+
+</html>
