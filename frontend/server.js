@@ -5,6 +5,7 @@ const compiler = require('compilex')
 
 var option = { stats: true }
 compiler.init(option)
+compiler.init({ stats: true });
 
 const app = express()
 
@@ -15,15 +16,13 @@ app.use(express.static(path.join(__dirname, "public")));
 
 
 app.get("/", (req, res) => {
+
     res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
 app.get("/ide", function (req, res) {
-    // compiler.flush(function () {
-    //     console.log("delete");
 
-    // })
-    res.sendFile(path.join(__dirname, "public","ide.html"))
+    res.sendFile(path.join(__dirname, "public", "ide.html"))
 })
 
 
@@ -59,7 +58,7 @@ app.post("/compiler", function (req, res) {
         }
         else if (lang == "java") {
             if (!input) {
-                var envData = { OS: "windows",options: { timeout: 10000 } };
+                var envData = { OS: "windows", options: { timeout: 10000 } };
                 compiler.compileJava(envData, code, function (data) {
                     if (data.output) {
                         res.send(data)
@@ -70,7 +69,7 @@ app.post("/compiler", function (req, res) {
                 });
             }
             else {
-                var envData = { OS: "windows" ,options: { timeout: 10000 }};
+                var envData = { OS: "windows", options: { timeout: 10000 } };
                 compiler.compileJavaWithInput(envData, code, input, function (data) {
                     if (data.output) {
                         res.send(data)
@@ -91,6 +90,7 @@ app.post("/compiler", function (req, res) {
                     else {
                         res.send({ output: "error" })
                     }
+
                 });
             }
             else {
@@ -110,7 +110,7 @@ app.post("/compiler", function (req, res) {
     catch (e) {
         console.log("error")
     }
-    
+
 })
 
 app.listen(8000)

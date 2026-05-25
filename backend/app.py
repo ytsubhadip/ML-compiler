@@ -1,33 +1,36 @@
-from flask import Flask, request, jsonify
+from fastapi import FastAPI
+from pydantic import BaseModel
+from typing import List
+from fastapi.middleware.cors import CORSMiddleware
 
-app = Flask(__name__)
 
-# Home Route
-@app.route("/")
-def home():
-    return "🚀 CodeArena Backend Running Successfully!"
+app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:8000"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+class Example(BaseModel):
+    input: str
+    output:str
+class Question(BaseModel):
+    question: str
+    description:str
+    exm: list[Example]
 
-# Run Code Route
-@app.route("/run", methods=["POST"])
-def run_code():
+@app.get("/")
+async def root():
+    return {"message": "ML compiler API"}
 
-    data = request.json
-
-    language = data.get("language")
-    code = data.get("code")
-
-    return jsonify({
-        "message": "Code received successfully",
-        "language": language,
-        "code": code
-    })
-
-if __name__ == "__main__":
-    app.run(debug=True)
-    
-    
-    
-from flask_cors import CORS
-
-app = Flask(__name__)
-CORS(app)
+@app.get("/question")
+async def questio():
+    return{
+        "question": "Reverse String",
+        "description":"Write a function that reverses a string. The input string is given as an array of characters s.",
+        "example":[{
+            "input": 'Input: s = ["h","e","l","l","o"]', 
+            "output":'Output: ["o","l","l","e","h"]'
+            }]
+    }
