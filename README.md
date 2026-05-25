@@ -1,5 +1,10 @@
 # ML-compiler
-This is a basically a online code IDE use backend ML for analysis code complexity, find the bug and guide a user.
+ML-compiler is an online code IDE prototype that combines a frontend editor with a backend API to analyze code. It uses:
+
+Python + FastAPI for backend services
+Node.js + Express for frontend server functionality
+CodeMirror for the in-browser code editor
+HTML/CSS/JavaScript for the UI
 
 ## Folder Structure
 ```
