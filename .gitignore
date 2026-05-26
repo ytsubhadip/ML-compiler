@@ -27,5 +27,6 @@ Thumbs.db
 .env
 
 # Build files
+judge0/
 dist/
 build/
