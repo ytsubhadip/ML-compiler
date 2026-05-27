@@ -7,22 +7,14 @@ document.getElementById("coderun").addEventListener('click', async function (e) 
   const expectedOutputElement = document.getElementById('org_input');
   const output = document.getElementById('output');
 
-
-
-
   if (optionL.value == "noL") {
     alert("Please choose Language")
     return;
   }
 
-
-
-
   const statusEl = document.getElementById('consoleStatus');
-  if (statusEl) {
-    statusEl.textContent = "Running";
-    statusEl.className = "badge-status badge-status-running";
-  }
+  statusEl.textContent = "Running";
+  statusEl.className = "badge-status badge-status-running";
 
   output.value = "Compiling and running...."
   output.classList.remove("console-error-text", "console-success-text");
@@ -41,6 +33,7 @@ document.getElementById("coderun").addEventListener('click', async function (e) 
       },
       body: JSON.stringify(code)
     })
+
     var con = await response.json()
     console.log("Compiler Response:", con)
 
@@ -49,18 +42,15 @@ document.getElementById("coderun").addEventListener('click', async function (e) 
       output.value = con.error;
       output.classList.add("console-error-text");
       output.classList.remove("console-success-text");
-
-      if (statusEl) {
-        statusEl.textContent = "Rejected";
-        statusEl.className = "badge-status badge-status-rejected";
-      }
+      statusEl.textContent = "Rejected";
+      statusEl.className = "badge-status badge-status-rejected";
+      
     }
-
-
     else {
       // Clean up stdout output and display
       const rawOutput = con.output || "";
-      output.value = typeof rawOutput === 'object' ? JSON.stringify(rawOutput, null, 2) : rawOutput;
+      output.value = rawOutput
+      statusEl.textContent = "Accept";
       output.classList.add("console-success-text");
       output.classList.remove("console-error-text");
     }
@@ -68,23 +58,10 @@ document.getElementById("coderun").addEventListener('click', async function (e) 
     // Populate execution metrics
     const execEl = document.getElementById('execTime');
     const compEl = document.getElementById('complexity');
-    const execVal = con.execTimeMs ?? con.executionTime ?? con.executionTimeMs ?? null;
-    if (execEl && execVal != null) execEl.textContent = execVal;
-    if (compEl && con.complexity) compEl.textContent = con.complexity;
-
     const user_output = output.value.trim();
+  }
 
-    if (con.error) {
-      alert("Please solve this error")
-    }
-
-    
-  } 
-  
-  
-  
   catch (err) {
-
     console.error("Compilation fetch failed:", err);
     output.value = "Execution Error: Unable to reach the compiler backend. Please verify that your servers are running.";
     output.classList.add("console-error-text");
