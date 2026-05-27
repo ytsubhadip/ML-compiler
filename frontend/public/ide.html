@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" style="height: 100%;">
+<html lang="en">
 
 <head>
   <meta charset="UTF-8" />
@@ -35,12 +35,9 @@
     integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-
-
-
 </head>
 
-<body class="landing-page ">
+<body class="landing-page d-flex flex-column" style="height: 100vh; overflow: hidden;">
 
   <!-- navbar start -->
   <nav class="navbar navbar-expand-lg " style="background-color: #121418;">
@@ -65,7 +62,7 @@
         </ul>
 
         <div class="d-flex justify-content-between" style="gap: 40px; align-items: center;">
-          <i class="bi bi-brightness-low-fill text-white" style="font-size: 1.5rem;" id="dark-mode"></i>
+          
           <div class="user ">
             <i class="bi bi-person-circle text-white" style="font-size: 2rem;"></i>
 
@@ -78,24 +75,19 @@
   </nav>
   <!-- navbar end -->
 
-  <div class="row gx-0">
-    <div class="col d-flex flex-column bg-dark px-4 question">
+  <div class="row gx-0 ide-workspace">
+    <!-- Left Column: Problem Details -->
+    <div class="col-12 col-lg-5 left-column">
 
-      <div class="left-panel">
+      <!-- question pannel -->
+      <div class="pane-card left-pane">
         <h2>Problem Statement</h2>
-
-        <h3 id="question"></h3>
-
-        <p id="description">
-
-        </p>
-
-        <h4>Sample: </h4>
-        <pre id="exap">
-
-
-        </pre>
-
+        <h3 id="question">Loading Question...</h3>
+        <h4>Example :</h4>
+        <pre id="exap"></pre>
+        <p id="description"></p>
+        <h3>Expected outcomes:</h3>
+        <pre id="sample"></pre>
         <h4>Constraints:</h4>
         <ul>
           <li>2 ≤ nums.length ≤ 10⁴</li>
@@ -105,75 +97,93 @@
 
     </div>
 
+    <!-- Right Column: Code Editor & Output Console -->
+    <div class="col-12 col-lg-7 right-column">
 
-    <div class="col px-0">
-      <div class="d-flex justify-content-between bg-dark p-2">
+      <!-- Editor Pane Card -->
+      <div class="pane-card editor-pane">
 
-        <div class="col-12 w-25 editor-nav">
-          <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
-          <select class="form-select" id="inlineFormSelectPref">
-            <option selected value="noL">Choose Language</option>
-            <option value="python">Python</option>
-            <option value="CPP">C++</option>
-            <option value="C">C</option>
-            <option value="java">Java</option>
-          </select>
+        <div class="editor-header">
 
+          <div class="custom-select-wrapper">
+            <label class="visually-hidden" for="inlineFormSelectPref">Language</label>
+
+            <select class="form-select custom-select" id="inlineFormSelectPref">
+              <option selected value="noL">Choose Language</option>
+              <option value="python">Python</option>
+              <option value="javascript">JavaScripts</option>
+              <option value="cpp">C++</option>
+              <option value="c">C</option>
+              <option value="java">Java</option>
+            </select>
+
+          </div>
+
+          <div class="d-flex gap-2">
+            <!-- code run button -->
+            <button type="button" class="btn btn-success btn-action" id="coderun">
+              <i class="bi bi-play-fill"></i> Run Code
+            </button>
+
+            <!-- code subbmit button -->
+            <button type="button" class="btn btn-success btn-action" disabled>
+              <i class="bi bi-cloud-upload"></i> Submit
+            </button>
+          </div>
 
         </div>
-        <div class="d-flex" style="gap: 20px;">
-          <button type="button" class="btn btn-success d-flex" id="coderun">
-            Run Code
-            <!-- <i class="bi bi-alarm"></i> -->
-          </button>
-          <button type="button" class="btn btn-success d-flex " disabled>
-            Submit Code
-            <!-- <i class="bi bi-play-fill"></i> -->
-          </button>
+
+        <!-- code ide space for write code -->
+        <div class="editor-body">
+          <textarea type="text" class="form-control" id="editor"></textarea>
         </div>
+
       </div>
-      <textarea type="text" class="form-control" id="editor"></textarea>
-      <div class="h-50 mt-2">
-        <label for="output" class="text-light mb-2">Output</label>
-        <textarea type="text" class="form-control h-50" id="output" readonly></textarea>
+
+      <!-- Console Pane Card -->
+      <div class="pane-card console-pane">
+
+        <div class="console-header">
+          <span class="console-header-title"><i class="bi bi-terminal-fill me-2"></i>Console Output</span>
+          <span class="badge-status badge-status-idle" id="consoleStatus">Idle</span>
+        </div>
+
+        <div class="console-body">
+
+          <textarea class="form-control" id="output" readonly
+            placeholder="Output will appear here after compiling..."></textarea>
+
+          <div class="console-footer">
+            <!-- show code Execution time -->
+            <div class="console-stat">
+              <span>Execution Time:</span>
+              <span class="console-stat-value"><span id="execTime">-</span> ms</span>
+            </div>
+            <!-- show code complexity -->
+            <div class="console-stat">
+              <span>Estimated Complexity:</span>
+              <span class="console-stat-value" id="complexity">-</span>
+            </div>
+
+          </div>
+        </div>
       </div>
     </div>
-
-
   </div>
-
 </body>
 
 <script>
-
-
-
   // codeMirror init
   var editor = CodeMirror.fromTextArea(document.getElementById('editor'), {
-    mode: "text/x-c++src",
-    theme: "darcula",
+    mode: "text/x-c++src",// language theam
+    theme: "darcula", // ide theam
     lineNumbers: true,
     autoCloseBrackets: true
-
   })
-
-  // // dark mood
-  const theamBtn = document.getElementById('dark-mode')
-  theamBtn.addEventListener('click', function (e) {
-    console.log("dark button");
-
-
-  }, false)
-
-
-
-
-
-
-
+  
+  editor.setSize("100%", "100%");
 </script>
 <script src="js/run.js"></script>
 <script src="js/language.js"></script>
 <script src="js/loadQuestion.js"></script>
-
 </html>

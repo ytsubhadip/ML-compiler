@@ -1,10 +1,11 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 from typing import List
+import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
-
-
 app = FastAPI()
+
+# add cross connection
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:8000"],
@@ -12,17 +13,11 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-class Example(BaseModel):
-    input: str
-    output:str
-class Question(BaseModel):
-    question: str
-    description:str
-    exm: list[Example]
+
 
 @app.get("/")
 async def root():
-    return {"message": "ML compiler API"}
+    return {"message": "Question API"}
 
 @app.get("/question")
 async def questio():
@@ -30,7 +25,12 @@ async def questio():
         "question": "Reverse String",
         "description":"Write a function that reverses a string. The input string is given as an array of characters s.",
         "example":[{
-            "input": 'Input: s = ["h","e","l","l","o"]', 
-            "output":'Output: ["o","l","l","e","h"]'
-            }]
+            "example_input": 'Input: s = ["h" ,"e" ,"l" ,"l" ,"o"]', 
+            "example_output":'Output: ["o" ,"l" ,"l" ,"e" ,"h"]'
+            }],
+        "sample":[{
+            "input": "hello",
+            "output":"olleh"
+        }]
     }
+

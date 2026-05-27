@@ -1,96 +1,55 @@
+const {estimateComplexity} = require('../modules/complexity');
 const express = require("express");
+const { format } = require("path");
 const router = express.Router();
-const compiler = require('compilex')
+const { performance } = require("perf_hooks");
 
-var option = { stats: true }
-compiler.init(option)
-compiler.init({ stats: true });
 
-router.post("/compiler", function (req, res) {
-    const code = req.body.code
-    const input = req.body.input
-    const lang = req.body.lang
+router.post("/compiler", async (req, res) => {
     try {
-        if (lang == "CPP") {
-            if (!input) {
-                var envData = { OS: "windows", cmd: "g++", options: { timeout: 10000 } };
-                compiler.compileCPP(envData, code, function (data) {
-                    if (data.output) {
-                        res.send(data);
-                    }
-                    else {
-                        res.send({ output: "error" })
-                    }
+        const { code, lang, input } = req.body;
 
-                });
-            }
-            else {
-                var envData = { OS: "windows", cmd: "g++", options: { timeout: 10000 } };
-                compiler.compileCPPWithInput(envData, code, input, function (data) {
-                    if (data.output) {
-                        res.send(data)
-                    }
-                    else {
-                        res.send({ output: "error" })
-                    }
-                });
-            }
-        }
-        else if (lang == "java") {
-            if (!input) {
-                var envData = { OS: "windows", options: { timeout: 10000 } };
-                compiler.compileJava(envData, code, function (data) {
-                    if (data.output) {
-                        res.send(data)
-                    }
-                    else {
-                        res.send({ output: "error" })
-                    }
-                });
-            }
-            else {
-                var envData = { OS: "windows", options: { timeout: 10000 } };
-                compiler.compileJavaWithInput(envData, code, input, function (data) {
-                    if (data.output) {
-                        res.send(data)
-                    }
-                    else {
-                        res.send({ output: "error" })
-                    }
-                });
-            }
-        }
-        else if (lang == 'python') {
-            if (!input) {
-                var envData = { OS: "windows" };
-                compiler.compilePython(envData, code, function (data) {
-                    if (data.output) {
-                        res.send(data)
-                    }
-                    else {
-                        res.send({ output: "error" })
-                    }
+        const languageMap = {
+            c:50,
+            cpp: 54,
+            java: 62,
+            javascript:63,
+            python: 71,
+            
+        };
 
-                });
+        // judge0 API call
+        const response = await fetch(
+            "https://ce.judge0.com/submissions?wait=true",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    source_code: code,
+                    language_id:languageMap[lang.toLowerCase()],
+                    stdin: input || ""
+                })
             }
-            else {
-                var envData = { OS: "windows" };
-                compiler.compilePythonWithInput(envData, code, input, function (data) {
-                    if (data.output) {
-                        res.send(data)
-                    }
-                    else {
-                        res.send({ output: "error" })
-                    }
-                });
-            }
+        );
 
-        }
+        const result = await response.json();
+
+        res.json({
+            output:
+                result.stdout ||
+                result.stderr ||
+                result.compile_output,
+            status:
+                result.status?.description
+        });
+
+    } catch (err) {
+        res.status(500).json({
+            error: err.message
+        });
     }
-    catch (e) {
-        console.log("error")
-    }
-
-})
+});
 
 module.exports = router;

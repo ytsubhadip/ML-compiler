@@ -1,8 +1,8 @@
 const express = require("express")
 const path = require('path')
 const bodyP = require('body-parser')
-const app = express()
 
+const app = express()
 app.use(bodyP.json())
 app.use(express.json())
 app.use(express.static(path.join(__dirname, "public")));
@@ -11,14 +11,15 @@ app.use(express.static(path.join(__dirname, "public")));
 const compileRoutes = require("./routes/compile");
 
 // Use Routes
-// mount compile router at root so its internal '/compiler' path becomes '/compiler'
 app.use("/", compileRoutes);
 
+// home route
 app.get("/", (req, res) => {
 
     res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
+// online IDE route
 app.get("/ide", function (req, res) {
 
     res.sendFile(path.join(__dirname, "public", "ide.html"))
