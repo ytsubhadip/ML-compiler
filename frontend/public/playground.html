@@ -22,6 +22,7 @@
   <script src="codemirror-5.65.21/addon/edit/closebrackets.js"></script>
   <script src="codemirror-5.65.21/mode/python/python.js"></script>
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/playground.css">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -51,7 +52,7 @@
             <a class="nav-link active text-light" aria-current="page" href="/">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active text-light" aria-current="page" href="/ide">Online IDE</a>
+            <a class="nav-link active text-light" aria-current="page" href="/playground">playground</a>
           </li>
         </ul>
         <div class="d-flex justify-content-between" style="gap: 40px; align-items: center;">
@@ -64,7 +65,10 @@
   </nav>
 
   <div class="row gx-0 ide-workspace">
+    <!-- Left Column: Problem Details -->
     <div class="col-12 col-lg-5 left-column">
+
+      <!-- question pannel -->
       <div class="pane-card left-pane">
         <h2>Problem Statement</h2>
         <h3 id="question">Loading Question...</h3>
@@ -79,10 +83,15 @@
           <li>-10⁹ ≤ nums[i] ≤ 10⁹</li>
         </ul>
       </div>
+
     </div>
 
+    <!-- Right Column: Code Editor & Output Console -->
     <div class="col-12 col-lg-7 right-column">
+
+      <!-- Editor Pane Card -->
       <div class="pane-card editor-pane">
+
         <div class="editor-header">
           <div class="custom-select-wrapper">
             <label class="visually-hidden" for="inlineFormSelectPref">Language</label>
@@ -99,24 +108,34 @@
             <button type="button" class="btn btn-success btn-action" id="coderun">
               <i class="bi bi-play-fill"></i> Run Code
             </button>
+
+            <!-- code subbmit button -->
             <button type="button" class="btn btn-success btn-action" disabled>
               <i class="bi bi-cloud-upload"></i> Submit
             </button>
           </div>
         </div>
 
+        <!-- code ide space for write code -->
         <div class="editor-body">
           <textarea type="text" class="form-control" id="editor"></textarea>
         </div>
+
       </div>
 
+      <!-- Console Pane Card -->
       <div class="pane-card console-pane">
+
         <div class="console-header">
           <span class="console-header-title"><i class="bi bi-terminal-fill me-2"></i>Console Output</span>
-          <span class="badge-status badge-status-idle" id="consoleStatus">Idle</span>
+          <span class="badge-status badge-status-idle" id="output-clear-btn">Clear</span>
         </div>
+
         <div class="console-body">
-          <textarea class="form-control" id="output" readonly placeholder="Output will appear here after compiling..."></textarea>
+
+          <textarea class="form-control" id="output" readonly
+            placeholder="Output will appear here after compiling..."></textarea>
+
           <div class="console-footer">
             <div class="console-stat">
               <span>Execution Time:</span>
@@ -130,6 +149,7 @@
         </div>
       </div>
     </div>
+
   </div>
 </body>
 
@@ -139,10 +159,10 @@
     theme: "darcula",
     lineNumbers: true,
     autoCloseBrackets: true
-  });
+  })
+  
   editor.setSize("100%", "100%");
 </script>
 <script src="js/run.js"></script>
 <script src="js/language.js"></script>
-<script src="js/loadQuestion.js"></script>
 </html>
