@@ -1,10 +1,10 @@
-const express = require("express")
-const path = require('path')
-const bodyP = require('body-parser')
+const express = require("express");
+const path = require('path');
 
-const app = express()
-app.use(bodyP.json())
-app.use(express.json())
+const app = express();
+
+// You only need express.json() - body-parser is redundant in modern Express
+app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 
 // Import Routes
@@ -15,21 +15,21 @@ app.use("/", compileRoutes);
 
 // home route
 app.get("/", (req, res) => {
-
     res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
 // online IDE route
 app.get("/ide", function (req, res) {
-
-    res.sendFile(path.join(__dirname, "public", "ide.html"))
-})
-
-
+    res.sendFile(path.join(__dirname, "public", "ide.html"));
+});
 
 app.get("/status", (req, res) => {
     res.json({ status: "ok", uptime: process.uptime() });
 });
 
-
-app.listen(8000)
+// Added the callback function to log the startup message
+const PORT = 8000;
+app.listen(PORT, () => {
+    console.log(` Server is successfully running on http://localhost:${PORT}`);
+    console.log(`  Access the IDE at http://localhost:${PORT}/ide`);
+});

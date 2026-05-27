@@ -1,53 +1,98 @@
-const {estimateComplexity} = require('../modules/complexity');
 const express = require("express");
-const { format } = require("path");
 const router = express.Router();
+const { estimateComplexity } = require('../modules/complexity');
 const { performance } = require("perf_hooks");
 
+const languageMap = {
+    "c": 50,
+    "cpp": 54,
+    "c++": 54, 
+    "java": 62,
+    "javascript": 63,
+    "python": 71,
+};
 
+// Helper function to safely decode Base64 strings from Judge0
+function safeDecode(encodedStr) {
+    if (!encodedStr) return "";
+    try {
+        return Buffer.from(encodedStr, 'base64').toString('utf-8');
+    } catch (e) {
+        return encodedStr; 
+    }
+}
+
+
+async function executeCode(code, lang, input = "") {
+    const language_id = languageMap[lang.toLowerCase().trim()];
+
+    if (!language_id) {
+        throw new Error(`Unsupported language selection: ${lang}`);
+    }
+
+  
+    const response = await fetch(
+        "https://ce.judge0.com/submissions?wait=true&base64_encoded=true",
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                source_code: Buffer.from(code).toString('base64'), 
+                language_id: language_id,
+                stdin: input ? Buffer.from(input).toString('base64') : "" 
+            })
+        }
+    );
+
+    if (!response.ok) {
+        const errorDetails = await response.text();
+        throw new Error(`Judge0 API returned status ${response.status}: ${errorDetails}`);
+    }
+
+    return await response.json();
+}
+
+// Router endpoint
 router.post("/compiler", async (req, res) => {
     try {
         const { code, lang, input } = req.body;
 
-        const languageMap = {
-            c:50,
-            cpp: 54,
-            java: 62,
-            javascript:63,
-            python: 71,
-            
-        };
+        if (!code) {
+            return res.json({ error: "Code body cannot be empty.", output: null });
+        }
 
-        // judge0 API call
-        const response = await fetch(
-            "https://ce.judge0.com/submissions?wait=true",
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    source_code: code,
-                    language_id:languageMap[lang.toLowerCase()],
-                    stdin: input || ""
-                })
-            }
-        );
+        const result = await executeCode(code, lang, input);
+       
 
-        const result = await response.json();
+        // Status ID 3 means "Accepted"
+        const isError = result.status && result.status.id !== 3;
 
-        res.json({
-            output:
-                result.stdout ||
-                result.stderr ||
-                result.compile_output,
-            status:
-                result.status?.description
+        if (isError) {
+           
+            let rawError = result.compile_output || result.stderr || result.status?.description || "Execution Failed";
+            let decodedError = safeDecode(rawError);
+
+            return res.json({
+                error: decodedError,
+                output: null,
+                status: result.status?.description
+            });
+        }
+
+     
+        return res.json({
+            output: safeDecode(result.stdout) || "Execution completed with no output output.",
+            error: null,
+            status: result.status?.description
         });
 
     } catch (err) {
-        res.status(500).json({
-            error: err.message
+        console.error("Backend Router Catch:", err.message);
+        return res.json({
+            error: `Server Configuration Error: ${err.message}`,
+            output: null
         });
     }
 });

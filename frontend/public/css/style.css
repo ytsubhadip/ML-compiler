@@ -1,34 +1,62 @@
-/* Custom Premium CSS for ML Compiler Online IDE */
+/* =========================================================================
+   1. GLOBAL VARIABLES & CORE CORE RESET
+   ========================================================================= */
+:root {
+    /* Color Palette */
+    --bg-main: #0d0f12;
+    --bg-card: #14161c;
+    --bg-header: #111317;
+    --bg-terminal: #0b0d10;
+    --bg-select: #1c1e24;
+    --bg-pre: #1e222b;
+    
+    /* Semantic Colors */
+    --accent-success: #2ec866;
+    --accent-success-bright: #39e57f;
+    --accent-error: #ef4444;
+    --accent-warning: #fbbf24;
+    
+    /* Text Colors */
+    --text-primary: #f3f4f6;
+    --text-secondary: #d1d5db;
+    --text-muted: #9ca3af;
+    --text-dark-muted: #6b7280;
+    
+    /* Fonts */
+    --font-sans: "Outfit", sans-serif;
+    --font-mono: 'Consolas', 'Fira Code', 'Courier New', monospace;
+}
 
 html,
 body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background-color: #0d0f12 !important;
+    background-color: var(--bg-main) !important;
     height: 100vh;
     overflow: hidden;
-    font-family: "Outfit", sans-serif;
-    color: #f3f4f6;
+    font-family: var(--font-sans);
+    color: var(--text-primary);
 }
 
-#dark-mode {
-    cursor: pointer;
-}
-
-.user {
+/* Utilities */
+#dark-mode, .user {
     cursor: pointer;
 }
 
 .outfit {
-    font-family: "Outfit", sans-serif;
+    font-family: var(--font-sans);
     font-weight: 700;
 }
 
+
+/* =========================================================================
+   2. NAVBAR COMPONENT STYLES
+   ========================================================================= */
 .navbar {
     padding-left: 25px;
     padding-right: 25px;
-    background-color: #111317 !important;
+    background-color: var(--bg-header) !important;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     height: 56px;
     min-height: 56px;
@@ -40,14 +68,17 @@ body {
     letter-spacing: 0.5px;
 }
 
-/* IDE Main Workspace Layout */
+
+/* =========================================================================
+   3. WORKSPACE LAYOUT ARCHITECTURE
+   ========================================================================= */
 .ide-workspace {
     height: calc(100vh - 56px);
     min-height: 0;
     margin: 0;
     padding: 0;
     display: flex;
-    background-color: #0d0f12;
+    background-color: var(--bg-main);
 }
 
 .left-column {
@@ -67,9 +98,8 @@ body {
     gap: 16px;
 }
 
-/* Premium Pane Cards */
 .pane-card {
-    background: #14161c;
+    background: var(--bg-card);
     border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: 12px;
     overflow: hidden;
@@ -78,6 +108,10 @@ body {
     flex-direction: column;
 }
 
+
+/* =========================================================================
+   4. LEFT PANE - PROBLEM DESCRIPTION CARD
+   ========================================================================= */
 .left-pane {
     height: 100%;
     min-height: 0;
@@ -88,7 +122,7 @@ body {
 .left-pane h2 {
     font-size: 1.5rem;
     font-weight: 700;
-    color: #4ade80;
+    color: #4ade80; /* Explicit highlight style */
     margin-bottom: 20px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     padding-bottom: 10px;
@@ -97,7 +131,7 @@ body {
 .left-pane h3 {
     font-size: 1.2rem;
     font-weight: 600;
-    color: #f3f4f6;
+    color: var(--text-primary);
     margin-top: 16px;
     margin-bottom: 8px;
 }
@@ -105,7 +139,7 @@ body {
 .left-pane h4 {
     font-size: 1rem;
     font-weight: 600;
-    color: #9ca3af;
+    color: var(--text-muted);
     margin-top: 12px;
     margin-bottom: 6px;
 }
@@ -113,18 +147,18 @@ body {
 .left-pane p {
     font-size: 0.95rem;
     line-height: 1.6;
-    color: #d1d5db;
+    color: var(--text-secondary);
     margin-bottom: 8px;
 }
 
 .left-pane pre {
-    background: #1e222b;
+    background: var(--bg-pre);
     border: 1px solid rgba(255, 255, 255, 0.04);
     color: #a7b5c9;
     padding: 10px 14px;
     border-radius: 8px;
     font-size: 0.9rem;
-    font-family: "Rubik", "Fira Code", monospace;
+    font-family: "Rubik", var(--font-mono);
     overflow-x: auto;
     margin-bottom: 10px;
 }
@@ -136,11 +170,14 @@ body {
 
 .left-pane li {
     font-size: 0.9rem;
-    color: #9ca3af;
+    color: var(--text-muted);
     margin-bottom: 6px;
 }
 
-/* Right Pane - Code Editor Pane */
+
+/* =========================================================================
+   5. RIGHT PANE - INTERACTIVE EDITOR CONTROLS
+   ========================================================================= */
 .editor-pane {
     flex: 1;
     min-height: 0;
@@ -149,7 +186,7 @@ body {
 .editor-header {
     height: 52px;
     min-height: 52px;
-    background-color: #111317;
+    background-color: var(--bg-header);
     border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     display: flex;
     align-items: center;
@@ -161,27 +198,46 @@ body {
     flex: 1;
     min-height: 0;
     position: relative;
-    background-color: #14161c;
+    background-color: var(--bg-card);
 }
 
+/* Custom Extensions for CodeMirror Instance */
 .editor-body .CodeMirror {
     height: 100% !important;
     width: 100% !important;
     position: absolute;
     top: 0;
     left: 0;
-    font-family: 'Consolas', 'Fira Code', 'Courier New', monospace;
+    font-family: var(--font-mono);
     font-size: 14px;
-    background-color: #14161c !important;
+    background-color: var(--bg-card) !important;
 }
 
-/* Language Dropdown Select */
+/* Custom Neon Green Cursor Styling */
+.CodeMirror-cursor {
+    border-left: 2px solid var(--accent-success) !important;
+}
+
+/* Fading Ambient Typing Line Highlight */
+.active-typing-line {
+    background: rgba(46, 200, 102, 0.04) !important;
+    box-shadow: inset 3px 0 0 var(--accent-success);
+    transition: background 0.1s ease, box-shadow 0.1s ease;
+}
+
+.line-fade-out {
+    background: transparent !important;
+    box-shadow: inset 0 0 0 transparent;
+    transition: background 0.8s ease, box-shadow 0.8s ease;
+}
+
+/* Language Context Selector dropdown */
 .custom-select-wrapper {
     width: 180px;
 }
 
 .custom-select {
-    background-color: #1c1e24 !important;
+    background-color: var(--bg-select) !important;
     border: 1px solid rgba(255, 255, 255, 0.1) !important;
     color: #e5e7eb !important;
     font-weight: 500 !important;
@@ -198,7 +254,7 @@ body {
     box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2) !important;
 }
 
-/* Action Buttons */
+/* Main UI Action Buttons */
 .btn-action {
     font-weight: 600 !important;
     padding: 6px 16px !important;
@@ -218,7 +274,10 @@ body {
     transform: translateY(0);
 }
 
-/* Right Pane - Output Console Pane */
+
+/* =========================================================================
+   6. CONSOLE INTERFACE & METRIC BADGES
+   ========================================================================= */
 .console-pane {
     height: 32%;
     min-height: 160px;
@@ -227,7 +286,7 @@ body {
 .console-header {
     height: 40px;
     min-height: 40px;
-    background-color: #111317;
+    background-color: var(--bg-header);
     border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     display: flex;
     align-items: center;
@@ -238,7 +297,7 @@ body {
 .console-header-title {
     font-size: 0.875rem;
     font-weight: 600;
-    color: #9ca3af;
+    color: var(--text-muted);
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
@@ -249,14 +308,14 @@ body {
     display: flex;
     flex-direction: column;
     padding: 12px;
-    background-color: #0b0d10;
+    background-color: var(--bg-terminal);
 }
 
 #output {
-    background-color: #0b0d10 !important;
+    background-color: var(--bg-terminal) !important;
     border: none !important;
     color: #e5e7eb !important;
-    font-family: 'Consolas', 'Fira Code', 'Courier New', monospace !important;
+    font-family: var(--font-mono) !important;
     font-size: 13.5px !important;
     padding: 4px 8px !important;
     resize: none !important;
@@ -268,6 +327,14 @@ body {
     box-shadow: none !important;
 }
 
+.console-error-text {
+    color: var(--accent-error) !important;
+}
+
+.console-success-text {
+    color: var(--accent-success-bright) !important;
+}
+
 .console-footer {
     display: flex;
     justify-content: space-between;
@@ -275,7 +342,7 @@ body {
     padding: 8px 8px 0 8px;
     border-top: 1px solid rgba(255, 255, 255, 0.04);
     font-size: 0.8rem;
-    color: #6b7280;
+    color: var(--text-dark-muted);
 }
 
 .console-stat {
@@ -289,7 +356,54 @@ body {
     font-weight: 600;
 }
 
-/* Elegant Scrollbars */
+
+/* =========================================================================
+   7. CORE STATUS BADGES & SAAS WIDGET COMPONENTS
+   ========================================================================= */
+.badge-status {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.badge-status-idle {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--text-muted);
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+.badge-status-running {
+    background-color: rgba(245, 158, 11, 0.15);
+    color: var(--accent-warning);
+    border-color: rgba(245, 158, 11, 0.25);
+}
+
+.badge-status-accepted {
+    background-color: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+    border-color: rgba(16, 185, 129, 0.25);
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.05);
+}
+
+.badge-status-rejected {
+    background-color: rgba(239, 68, 68, 0.15);
+    color: #f87171;
+    border-color: rgba(239, 68, 68, 0.25);
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.05);
+}
+
+
+/* =========================================================================
+   8. PREMIUM GLOBAL SCROLLBARS & MEDIA QUERIES
+   ========================================================================= */
 ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
@@ -312,7 +426,6 @@ body {
     background-clip: padding-box;
 }
 
-/* Responsive adjustments */
 @media (max-width: 991px) {
     .ide-workspace {
         flex-direction: column;
@@ -335,52 +448,3 @@ body {
     }
 }
 
-/* Console Dynamic States */
-.console-error-text {
-    color: #ef4444 !important; /* Premium red for errors */
-}
-
-.console-success-text {
-    color: #39e57f !important; /* Premium bright terminal green for output */
-}
-
-/* Console Status Badge */
-.badge-status {
-    font-size: 0.7rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    padding: 3px 8px;
-    border-radius: 20px;
-    letter-spacing: 0.5px;
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    border: 1px solid transparent;
-    transition: all 0.2s ease;
-}
-
-.badge-status-idle {
-    background-color: rgba(255, 255, 255, 0.05);
-    color: #9ca3af;
-    border-color: rgba(255, 255, 255, 0.08);
-}
-
-.badge-status-running {
-    background-color: rgba(245, 158, 11, 0.15);
-    color: #fbbf24;
-    border-color: rgba(245, 158, 11, 0.25);
-}
-
-.badge-status-accepted {
-    background-color: rgba(16, 185, 129, 0.15);
-    color: #34d399;
-    border-color: rgba(16, 185, 129, 0.25);
-    box-shadow: 0 0 10px rgba(16, 185, 129, 0.05);
-}
-
-.badge-status-rejected {
-    background-color: rgba(239, 68, 68, 0.15);
-    color: #f87171;
-    border-color: rgba(239, 68, 68, 0.25);
-    box-shadow: 0 0 10px rgba(239, 68, 68, 0.05);
-}

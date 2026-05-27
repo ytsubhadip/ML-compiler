@@ -17,7 +17,6 @@
   <link rel="stylesheet" href="codemirror-5.65.21/lib/codemirror.css">
   <script src="codemirror-5.65.21/lib/codemirror.js"></script>
   <script src="codemirror-5.65.21/mode/clike/clike.js"></script>
-  <!-- theme -->
   <link rel="stylesheet" href="codemirror-5.65.21/theme/darcula.css">
   <link rel="stylesheet" href="codemirror-5.65.21/theme/night.css">
   <script src="codemirror-5.65.21/addon/edit/closebrackets.js"></script>
@@ -27,23 +26,19 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
-  <link
-    href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
     integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
-
 </head>
 
 <body class="landing-page d-flex flex-column" style="height: 100vh; overflow: hidden;">
 
-  <!-- navbar start -->
-  <nav class="navbar navbar-expand-lg " style="background-color: #121418;">
+  <nav class="navbar navbar-expand-lg" style="background-color: #121418;">
     <div class="container-fluid">
       <div>
-        <i class="fa-brands fa-magento" style="color: rgb(46, 200, 102); font-size:35px ;"></i>
+        <i class="fa-brands fa-magento" style="color: rgb(46, 200, 102); font-size:35px;"></i>
       </div>
       <a class="navbar-brand text-light outfit" href="index.html" style="font-size: 1.5rem;">ML compiler</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -51,35 +46,25 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0 " style="margin-left: 70px;">
-          <li class="nav-item ">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="margin-left: 70px;">
+          <li class="nav-item">
             <a class="nav-link active text-light" aria-current="page" href="/">Home</a>
           </li>
           <li class="nav-item">
             <a class="nav-link active text-light" aria-current="page" href="/ide">Online IDE</a>
           </li>
-
         </ul>
-
         <div class="d-flex justify-content-between" style="gap: 40px; align-items: center;">
-          
-          <div class="user ">
+          <div class="user">
             <i class="bi bi-person-circle text-white" style="font-size: 2rem;"></i>
-
           </div>
-
         </div>
-
       </div>
     </div>
   </nav>
-  <!-- navbar end -->
 
   <div class="row gx-0 ide-workspace">
-    <!-- Left Column: Problem Details -->
     <div class="col-12 col-lg-5 left-column">
-
-      <!-- question pannel -->
       <div class="pane-card left-pane">
         <h2>Problem Statement</h2>
         <h3 id="question">Loading Question...</h3>
@@ -94,77 +79,53 @@
           <li>-10⁹ ≤ nums[i] ≤ 10⁹</li>
         </ul>
       </div>
-
     </div>
 
-    <!-- Right Column: Code Editor & Output Console -->
     <div class="col-12 col-lg-7 right-column">
-
-      <!-- Editor Pane Card -->
       <div class="pane-card editor-pane">
-
         <div class="editor-header">
-
           <div class="custom-select-wrapper">
             <label class="visually-hidden" for="inlineFormSelectPref">Language</label>
-
             <select class="form-select custom-select" id="inlineFormSelectPref">
               <option selected value="noL">Choose Language</option>
               <option value="python">Python</option>
-              <option value="javascript">JavaScripts</option>
+              <option value="javascript">JavaScript</option>
               <option value="cpp">C++</option>
               <option value="c">C</option>
               <option value="java">Java</option>
             </select>
-
           </div>
-
           <div class="d-flex gap-2">
-            <!-- code run button -->
             <button type="button" class="btn btn-success btn-action" id="coderun">
               <i class="bi bi-play-fill"></i> Run Code
             </button>
-
-            <!-- code subbmit button -->
             <button type="button" class="btn btn-success btn-action" disabled>
               <i class="bi bi-cloud-upload"></i> Submit
             </button>
           </div>
-
         </div>
 
-        <!-- code ide space for write code -->
         <div class="editor-body">
           <textarea type="text" class="form-control" id="editor"></textarea>
         </div>
-
       </div>
 
-      <!-- Console Pane Card -->
       <div class="pane-card console-pane">
-
         <div class="console-header">
           <span class="console-header-title"><i class="bi bi-terminal-fill me-2"></i>Console Output</span>
           <span class="badge-status badge-status-idle" id="consoleStatus">Idle</span>
         </div>
-
         <div class="console-body">
-
-          <textarea class="form-control" id="output" readonly
-            placeholder="Output will appear here after compiling..."></textarea>
-
+          <textarea class="form-control" id="output" readonly placeholder="Output will appear here after compiling..."></textarea>
           <div class="console-footer">
-            <!-- show code Execution time -->
             <div class="console-stat">
               <span>Execution Time:</span>
               <span class="console-stat-value"><span id="execTime">-</span> ms</span>
             </div>
-            <!-- show code complexity -->
             <div class="console-stat">
               <span>Estimated Complexity:</span>
               <span class="console-stat-value" id="complexity">-</span>
             </div>
-
           </div>
         </div>
       </div>
@@ -173,14 +134,12 @@
 </body>
 
 <script>
-  // codeMirror init
   var editor = CodeMirror.fromTextArea(document.getElementById('editor'), {
-    mode: "text/x-c++src",// language theam
-    theme: "darcula", // ide theam
+    mode: "text/x-c++src",
+    theme: "darcula",
     lineNumbers: true,
     autoCloseBrackets: true
-  })
-  
+  });
   editor.setSize("100%", "100%");
 </script>
 <script src="js/run.js"></script>

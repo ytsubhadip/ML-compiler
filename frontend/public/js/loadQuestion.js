@@ -1,29 +1,35 @@
-//Question load from database 
-async function load(){
-    const response = await fetch("http://127.0.0.1:8000/question");
-    const data = await response.json()
+document.addEventListener("DOMContentLoaded", async () => {
+    const questionTitle = document.getElementById("question");
+    const questionExample = document.getElementById("exap");
+    const questionDescription = document.getElementById("description");
+    const questionSample = document.getElementById("sample");
 
-    console.log(data)
+    try {
+        const response = await fetch("http://localhost:8000/api/question/active");
+        if (!response.ok) throw new Error(`Data pipeline down: Status ${response.status}`);
 
-    const Question = document.querySelector('#question')
-    const Desc = document.querySelector("#description")
-    const Example = document.querySelector("#exap")
-    const sample = document.querySelector("#sample")
+        const data = await response.json();
 
-    Question.innerText = data.question
-    Desc.innerText = data.description
-    
-    // Clear initial elements and add cleanly trimmed content
-    Example.innerHTML = "";
-    sample.innerHTML = "";
+        if (data) {
+            if (questionTitle) questionTitle.textContent = data.title || "Untitled Problem";
+            if (questionDescription) questionDescription.textContent = data.description || "No description provided.";
+            
+            if (questionExample) {
+                questionExample.textContent = data.example 
+                    ? (typeof data.example === 'object' ? JSON.stringify(data.example, null, 2) : data.example)
+                    : "No test examples specified.";
+            }
 
-    data.example.forEach(ex => {
-        Example.innerHTML += `${ex.example_input.trim()}\n${ex.example_output.trim()}\n`;
-    });
-    data.sample.forEach(sa=>{
-        sample.innerHTML += `input : <span id="sample_input">${sa.input}</span>\noutput : <span id="org_input">${sa.output}</span>\n`;
-    });
-}
+            if (questionSample) {
+                questionSample.textContent = data.sampleOutputs 
+                    ? (typeof data.sampleOutputs === 'object' ? JSON.stringify(data.sampleOutputs, null, 2) : data.sampleOutputs)
+                    : "Standard tracking constraints active.";
+            }
+        }
 
-
-load()
+    } catch (err) {
+        console.error("Failed to load global workspace problem statement context:", err);
+        if (questionTitle) questionTitle.textContent = "Error Loading Question Context";
+        if (questionDescription) questionDescription.textContent = "Unable to connect to internal data API layers.";
+    }
+});
