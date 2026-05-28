@@ -33,36 +33,48 @@
 </head>
 
 <body class="landing-page d-flex flex-column" style="height: 100vh; overflow: hidden;">
-  <!-- navbar start -->
-  <nav class="navbar navbar-expand-lg " style="background-color: #121418;">
-    <div class="container-fluid">
-      <div>
-        <i class="fa-brands fa-magento" style="color: rgb(46, 200, 102); font-size:35px ;"></i>
-      </div>
-      <a class="navbar-brand text-light outfit" href="/" style="font-size: 1.5rem;">ML compiler</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0 " style="margin-left: 70px;">
-          <li class="nav-item ">
-            <a class="nav-link active text-light" aria-current="page" href="/">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active text-light" aria-current="page" href="/playground">playground</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active text-light" aria-current="page" href="/ide">coding Text</a>
-          </li>
-        </ul>
+  <!-- Starry background canvas backdrop (Fixed full screen) -->
+  <div class="starry-background-canvas">
+      <div id="stars"></div>
+      <div id="stars2"></div>
+      <div id="stars3"></div>
+  </div>
 
-        <div class="d-flex justify-content-between" style="gap: 40px; align-items: center;">
-          <div class="user ">
-            <i class="bi bi-person-circle text-white" style="font-size: 2rem;"></i>
-          </div>
+  <!-- navbar start -->
+  <nav class="custom-navbar">
+    <div class="nav-container">
+      <!-- Left: Logo & Branding -->
+      <a class="nav-brand" href="/">
+        <i class="fa-brands fa-magento nav-logo"></i>
+        <span class="nav-title">ML compiler</span>
+      </a>
+      
+      <!-- Center: Perfectly Centered Navigation Menu -->
+      <div class="nav-menu-wrapper" id="navMenuWrapper">
+        <ul class="nav-menu">
+          <li><a href="/" class="nav-link">Home</a></li>
+          <li><a href="/playground" class="nav-link active">playground</a></li>
+          <li><a href="/ide" class="nav-link">coding Text</a></li>
+        </ul>
+        <!-- Mobile only actions inside the drawer -->
+        <div class="nav-actions-mobile">
+          <a href="/signin" class="btn-signin">Sign In</a>
+          <a href="/signup" class="btn-signup">Sign Up</a>
         </div>
       </div>
+      
+      <!-- Right: Actions -->
+      <div class="nav-actions">
+        <a href="/signin" class="btn-signin">Sign In</a>
+        <a href="/signup" class="btn-signup">Sign Up</a>
+      </div>
+      
+      <!-- Mobile Toggle Burger Button -->
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle Navigation">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
     </div>
   </nav>
   <!-- navbar end -->
@@ -123,6 +135,19 @@
       </div>
     </div>
   </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const navToggle = document.getElementById('navToggle');
+      const navMenuWrapper = document.getElementById('navMenuWrapper');
+      
+      if (navToggle && navMenuWrapper) {
+        navToggle.addEventListener('click', function() {
+          navToggle.classList.toggle('active');
+          navMenuWrapper.classList.toggle('active');
+        });
+      }
+    });
+  </script>
 </body>
 
 <script>

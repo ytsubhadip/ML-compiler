@@ -4,32 +4,98 @@ document.addEventListener("DOMContentLoaded", async () => {
     const questionDescription = document.getElementById("description");
     const questionSample = document.getElementById("sample");
 
-    try {
-        const response = await fetch("http://localhost:8000/api/question/active");
-        if (!response.ok) throw new Error(`Data pipeline down: Status ${response.status}`);
+    // The primary uvicorn server runs on port 8001 (FastAPI backend)
+    const FASTAPI_URL = "http://localhost:8001/question";
+    const FALLBACK_URL = "http://localhost:8000/api/question/active";
 
-        const data = await response.json();
+    async function tryFetchQuestion(url) {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error(`Status ${response.status}`);
+        return await response.json();
+    }
+
+    try {
+        let data = null;
+        try {
+            // Attempt to load from the main FastAPI server
+            data = await tryFetchQuestion(FASTAPI_URL);
+        } catch (fastApiErr) {
+            console.warn("FastAPI primary server (port 8001) unreachable, trying Express proxy...", fastApiErr);
+            // Fallback to Express backend
+            data = await tryFetchQuestion(FALLBACK_URL);
+        }
 
         if (data) {
-            if (questionTitle) questionTitle.textContent = data.title || "Untitled Problem";
-            if (questionDescription) questionDescription.textContent = data.description || "No description provided.";
-            
-            if (questionExample) {
-                questionExample.textContent = data.example 
-                    ? (typeof data.example === 'object' ? JSON.stringify(data.example, null, 2) : data.example)
-                    : "No test examples specified.";
+            // Standardize keys (Supports both FastAPI backend and legacy API shapes)
+            const titleText = data.question || data.title || "Reverse String";
+            const descText = data.description || "Write a function that reverses a string. The input string is given as an array of characters s.";
+            const rawExample = data.example;
+            const rawSample = data.sample || data.sampleOutputs;
+
+            if (questionTitle) {
+                questionTitle.textContent = titleText;
             }
 
+            if (questionDescription) {
+                questionDescription.textContent = descText;
+            }
+            
+            // Format Example Content elegantly
+            if (questionExample) {
+                let exampleText = "";
+                if (rawExample) {
+                    if (Array.isArray(rawExample)) {
+                        rawExample.forEach((ex, idx) => {
+                            if (ex.example_input) exampleText += `${ex.example_input}\n`;
+                            if (ex.example_output) exampleText += `${ex.example_output}\n`;
+                            if (idx < rawExample.length - 1) exampleText += "\n";
+                        });
+                    } else if (typeof rawExample === 'object') {
+                        exampleText = JSON.stringify(rawExample, null, 2);
+                    } else {
+                        exampleText = rawExample;
+                    }
+                } else {
+                    exampleText = 'Input: s = ["h","e","l","l","o"]\nOutput: ["o","l","l","e","h"]';
+                }
+                questionExample.textContent = exampleText;
+            }
+
+            // Format Expected Outcome Context elegantly
             if (questionSample) {
-                questionSample.textContent = data.sampleOutputs 
-                    ? (typeof data.sampleOutputs === 'object' ? JSON.stringify(data.sampleOutputs, null, 2) : data.sampleOutputs)
-                    : "Standard tracking constraints active.";
+                let sampleText = "";
+                if (rawSample) {
+                    if (Array.isArray(rawSample)) {
+                        rawSample.forEach((sa, idx) => {
+                            if (sa.input) sampleText += `Input: "${sa.input}"\n`;
+                            if (sa.output) sampleText += `Output: "${sa.output}"\n`;
+                            if (idx < rawSample.length - 1) sampleText += "\n";
+                        });
+                    } else if (typeof rawSample === 'object') {
+                        sampleText = JSON.stringify(rawSample, null, 2);
+                    } else {
+                        sampleText = rawSample;
+                    }
+                } else {
+                    sampleText = 'Input: "hello"\nOutput: "olleh"';
+                }
+                questionSample.textContent = sampleText;
             }
         }
 
     } catch (err) {
-        console.error("Failed to load global workspace problem statement context:", err);
-        if (questionTitle) questionTitle.textContent = "Error Loading Question Context";
-        if (questionDescription) questionDescription.textContent = "Unable to connect to internal data API layers.";
+        console.error("Failed to load problem statement content from all endpoints:", err);
+        
+        // Populate standard defaults (so it never stays stuck or blank even if servers are bootstrapping)
+        if (questionTitle) questionTitle.textContent = "Reverse String";
+        if (questionDescription) {
+            questionDescription.textContent = "Write a function that reverses a string. The input string is given as an array of characters s. You must do this by modifying the input array in-place with O(1) extra memory.";
+        }
+        if (questionExample) {
+            questionExample.textContent = 'Input: s = ["h","e","l","l","o"]\nOutput: ["o","l","l","e","h"]';
+        }
+        if (questionSample) {
+            questionSample.textContent = 'Input: "hello"\nOutput: "olleh"';
+        }
     }
 });

@@ -30,6 +30,15 @@ app.get("/ide", function (req, res) {
     res.sendFile(path.join(__dirname, "public", "ide.html"))
 })
 
+// signin route
+app.get("/signin",(req, res)=>{
+    res.sendFile(path.join(__dirname, "public", "signin.html"))
+} )
+
+// signup route
+app.get("/signup",(req, res)=>{
+    res.sendFile(path.join(__dirname, "public", "signup.html"))
+} )
 
 
 app.get("/status", (req, res) => {
