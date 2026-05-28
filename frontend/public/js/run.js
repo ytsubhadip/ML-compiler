@@ -154,16 +154,6 @@ document.getElementById("coderun").addEventListener('click', async function (e) 
     const statusEl = document.getElementById('consoleStatus');
     const inputEl = document.getElementById("customInput");
 
-<<<<<<< Updated upstream
-    if (!optionLElement || optionLElement.value === "noL") {
-        showModernToast("Please select a valid environment language context.", false);
-        return;
-    }
-
-    if (statusEl) {
-        statusEl.textContent = "Running";
-        statusEl.className = "badge-status badge-status-running";
-=======
   if (optionL.value == "noL") {
     alert("Please choose Language")
     return;
@@ -221,7 +211,6 @@ document.getElementById("coderun").addEventListener('click', async function (e) 
 
     if (statusEl) {
      
->>>>>>> Stashed changes
     }
 
     updateConsolePet('running');
