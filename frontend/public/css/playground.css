@@ -109,6 +109,7 @@
     min-height: 52px;
     background-color: #111317;
     border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 0 0 0 0;
     display: flex;
     align-items: center;
     justify-content: space-between;

@@ -24,6 +24,12 @@ app.get("/playground", function (req, res) {
     res.sendFile(path.join(__dirname, "public", "playground.html"))
 })
 
+// online Test compiler
+app.get("/ide", function (req, res) {
+
+    res.sendFile(path.join(__dirname, "public", "ide.html"))
+})
+
 
 
 app.get("/status", (req, res) => {
@@ -34,5 +40,4 @@ app.get("/status", (req, res) => {
 const PORT = 8000;
 app.listen(PORT, () => {
     console.log(` Server is successfully running on http://localhost:${PORT}`);
-    console.log(`  Access the IDE at http://localhost:${PORT}/ide`);
 });
