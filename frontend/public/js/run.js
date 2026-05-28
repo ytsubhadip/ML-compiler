@@ -176,7 +176,7 @@ document.getElementById("coderun").addEventListener('click', async function (e) 
     };
 
     try {
-        const response = await fetch("http://localhost:8000/compiler", {
+        const response = await fetch("https://ml-compiler-074b.onrender.com/compiler", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(code)
