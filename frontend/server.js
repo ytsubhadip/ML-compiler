@@ -18,10 +18,13 @@ app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-// online IDE route
-app.get("/ide", function (req, res) {
-    res.sendFile(path.join(__dirname, "public", "ide.html"));
-});
+// online playground
+app.get("/playground", function (req, res) {
+
+    res.sendFile(path.join(__dirname, "public", "playground.html"))
+})
+
+
 
 app.get("/status", (req, res) => {
     res.json({ status: "ok", uptime: process.uptime() });
