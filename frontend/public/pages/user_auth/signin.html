@@ -42,11 +42,9 @@
 
                 <div class="persona-selector-container" id="personaSelectorContainer">
                     <div class="persona-indicator" id="personaIndicator"></div>
-
                     <button class="persona-tab active" id="btnTabStudent" type="button">
                         <i class="bi bi-mortarboard-fill me-2"></i>Student
                     </button>
-
                     <button class="persona-tab" id="btnTabTeacher" type="button">
                         <i class="bi bi-person-workspace me-2"></i>Teacher
                     </button>
@@ -67,7 +65,7 @@
                             <div class="input-wrapper">
                                 <i class="bi bi-lock-fill input-icon"></i>
                                 <input class="input-control password-input" type="password" id="signinPassword" required placeholder="••••••••">
-                                <i class="bi bi-eye-slash-fill toggle-password" id="toggleSigninPassword"></i>
+                                <i class="bi bi-eye-slash-fill toggle-password" onclick="togglePasswordVisibility('signinPassword', this)"></i>
                             </div>
                         </div>
 
@@ -89,7 +87,55 @@
             </div>
         </div>
     </main>
-    
+    <script>
+        const btnTabStudent = document.getElementById('btnTabStudent');
+        const btnTabTeacher = document.getElementById('btnTabTeacher');
+        const personaSelectorContainer = document.getElementById('personaSelectorContainer');
+        const btnSubmitSignin = document.getElementById('btnSubmitSignin');
+        const authSubtitle = document.getElementById('authSubtitle');
+
+        let activeRole = 'student';
+
+        function selectStudentRole() {
+            btnTabStudent.classList.add('active');
+            btnTabTeacher.classList.remove('active');
+            personaSelectorContainer.classList.remove('teacher-active');
+            btnSubmitSignin.className = "btn-auth-submit btn-signin-submit";
+            btnSubmitSignin.removeAttribute('style');
+            activeRole = 'student';
+            authSubtitle.innerText = "Log in to ML Compiler to compile and run your solutions as a student.";
+        }
+
+        function selectTeacherRole() {
+            btnTabStudent.classList.remove('active');
+            btnTabTeacher.classList.add('active');
+            personaSelectorContainer.classList.add('teacher-active');
+            btnSubmitSignin.style.backgroundColor = "#3b82f6";
+            btnSubmitSignin.style.borderColor = "#3b82f6";
+            btnSubmitSignin.style.color = "#ffffff";
+            btnSubmitSignin.style.boxShadow = "0 4px 12px rgba(59, 130, 246, 0.15)";
+            activeRole = 'teacher';
+            authSubtitle.innerText = "Log in to ML Compiler to compile and run your solutions as a teacher.";
+        }
+
+        btnTabStudent.addEventListener('click', selectStudentRole);
+        btnTabTeacher.addEventListener('click', selectTeacherRole);
+
+        function togglePasswordVisibility(inputId, toggleIcon) {
+            const passwordInput = document.getElementById(inputId);
+            if (passwordInput) {
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    toggleIcon.classList.remove('bi-eye-slash-fill');
+                    toggleIcon.classList.add('bi-eye-fill');
+                } else {
+                    passwordInput.type = 'password';
+                    toggleIcon.classList.remove('bi-eye-fill');
+                    toggleIcon.classList.add('bi-eye-slash-fill');
+                }
+            }
+        }
+    </script>
     <script src="/js/auth/signin.js"></script>
 </body>
 
