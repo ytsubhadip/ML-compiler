@@ -43,8 +43,8 @@ app.get("/status", (req, res) => {
 // Dynamic port assignment for Render deployment, falling back to 8000 locally
 const PORT = process.env.PORT || 8000;
 
-// Corrected absolute cloud connection string literal
-const productionURI = "mongodb+srv://sheikhrahul18581_db_user:Skrahul06@botalsepaisa.uvp16kf.mongodb.net/ml-compiler?retryWrites=true&w=majority&appName=botalsepaisa";
+// 🟢 Standard Shard-Targeted Connection String (Bypasses SRV DNS Lookups completely)
+const productionURI = "mongodb://sheikhrahul18581_db_user:Skrahul06@ac-uvp16kf-shard-00-00.uvp16kf.mongodb.net:27017,ac-uvp16kf-shard-00-01.uvp16kf.mongodb.net:27017,ac-uvp16kf-shard-00-02.uvp16kf.mongodb.net:27017/ml-compiler?ssl=true&replicaSet=atlas-uvp16kf-shard-0&authSource=admin&retryWrites=true&w=majority";
 
 console.log("⏳ Attempting direct MongoDB Atlas handshake...");
 
