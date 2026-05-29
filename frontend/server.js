@@ -21,23 +21,23 @@ app.get("/", (req, res) => {
 // online playground
 app.get("/playground", function (req, res) {
 
-    res.sendFile(path.join(__dirname, "public", "playground.html"))
+    res.sendFile(path.join(__dirname, "public", "pages/compiler_page/playground.html"))
 })
 
 // online Test compiler
 app.get("/ide", function (req, res) {
 
-    res.sendFile(path.join(__dirname, "public", "ide.html"))
+    res.sendFile(path.join(__dirname, "public", "pages/compiler_page/testCompiler.html"))
 })
 
 // signin route
 app.get("/signin",(req, res)=>{
-    res.sendFile(path.join(__dirname, "public", "signin.html"))
+    res.sendFile(path.join(__dirname, "public", "pages/user_auth/signin.html"))
 } )
 
 // signup route
 app.get("/signup",(req, res)=>{
-    res.sendFile(path.join(__dirname, "public", "signup.html"))
+    res.sendFile(path.join(__dirname, "public", "pages/user_auth/signup.html"))
 } )
 
 

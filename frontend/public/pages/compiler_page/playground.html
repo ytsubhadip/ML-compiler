@@ -20,7 +20,7 @@
   <script src="/codemirror-5.65.21/addon/edit/closebrackets.js"></script>
   <script src="/codemirror-5.65.21/mode/python/python.js"></script>
   <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/playground.css">
+  <link rel="stylesheet" href="css/compiler_css/playground.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
@@ -33,12 +33,6 @@
 </head>
 
 <body class="landing-page d-flex flex-column" style="height: 100vh; overflow: hidden;">
-  <!-- Starry background canvas backdrop (Fixed full screen) -->
-  <div class="starry-background-canvas">
-      <div id="stars"></div>
-      <div id="stars2"></div>
-      <div id="stars3"></div>
-  </div>
 
   <!-- navbar start -->
   <nav class="custom-navbar">
@@ -48,13 +42,13 @@
         <i class="fa-brands fa-magento nav-logo"></i>
         <span class="nav-title">ML compiler</span>
       </a>
-      
+
       <!-- Center: Perfectly Centered Navigation Menu -->
       <div class="nav-menu-wrapper" id="navMenuWrapper">
         <ul class="nav-menu">
           <li><a href="/" class="nav-link">Home</a></li>
           <li><a href="/playground" class="nav-link active">playground</a></li>
-          <li><a href="/ide" class="nav-link">coding Text</a></li>
+          <li><a href="/ide" class="nav-link">coding Test</a></li>
         </ul>
         <!-- Mobile only actions inside the drawer -->
         <div class="nav-actions-mobile">
@@ -62,13 +56,13 @@
           <a href="/signup" class="btn-signup">Sign Up</a>
         </div>
       </div>
-      
+
       <!-- Right: Actions -->
       <div class="nav-actions">
         <a href="/signin" class="btn-signin">Sign In</a>
         <a href="/signup" class="btn-signup">Sign Up</a>
       </div>
-      
+
       <!-- Mobile Toggle Burger Button -->
       <button class="nav-toggle" id="navToggle" aria-label="Toggle Navigation">
         <span class="bar"></span>
@@ -123,7 +117,7 @@
                 <div class="console-stat">
                   <span>Execution Time:</span>
                   <span class="console-stat-value"><span id="execTime">-</span> ms</span>
-                </div>                                  
+                </div>
                 <div class="console-stat">
                   <span>Estimated Complexity:</span>
                   <span class="console-stat-value" id="complexity">-</span>
@@ -135,19 +129,6 @@
       </div>
     </div>
   </div>
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const navToggle = document.getElementById('navToggle');
-      const navMenuWrapper = document.getElementById('navMenuWrapper');
-      
-      if (navToggle && navMenuWrapper) {
-        navToggle.addEventListener('click', function() {
-          navToggle.classList.toggle('active');
-          navMenuWrapper.classList.toggle('active');
-        });
-      }
-    });
-  </script>
 </body>
 
 <script>
@@ -158,9 +139,20 @@
     autoCloseBrackets: true
   })
 
+  // navbar toggle button for mobile device
+  document.addEventListener('DOMContentLoaded', function () {
+    const navToggle = document.getElementById('navToggle');
+    const navMenuWrapper = document.getElementById('navMenuWrapper');
 
+    if (navToggle && navMenuWrapper) {
+      navToggle.addEventListener('click', function () {
+        navToggle.classList.toggle('active');
+        navMenuWrapper.classList.toggle('active');
+      });
+    }
+  });
 </script>
-<script src="js/playgroundRun.js"></script>
+<script src="js/run_compiler/playgroundRun.js"></script>
 <script src="js/language.js"></script>
 
 </html>

@@ -148,8 +148,9 @@ document.addEventListener('DOMContentLoaded', () => updateConsolePet('idle'));
 const runBtn = document.getElementById("coderun")
 runBtn.addEventListener('click', async function (e) {
     e.preventDefault();
-    runBtn.disabled = true
-    runBtn.innerText = "Running...";
+
+    
+   
     const optionLElement = document.getElementById("inlineFormSelectPref");
     const output = document.getElementById('output');
     const statusEl = document.getElementById('consoleStatus');
@@ -177,14 +178,17 @@ runBtn.addEventListener('click', async function (e) {
     };
 
     try {
-        const response = await fetch("https://ml-compiler-074b.onrender.com/compiler", {
+        runBtn.disabled = true
+        runBtn.innerText = "Running...";
+        
+        const response = await fetch("http://localhost:8000/compiler", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(code)
         });
 
         if (!response.ok) throw new Error(`HTTP Matrix Error: ${response.status}`);
-
+      
         const con = await response.json();
 
         if (con.error) {
