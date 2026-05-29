@@ -49,7 +49,8 @@ app.get("/status", (req, res) => {
 const PORT = process.env.PORT || 8000;
 
 // Pristine connection URI explicitly targeting your /ml-compiler partition
-const productionURI = "mongodb+srv://sheikhrahul8581_db_user:Skrahul06@botalsepaisa.uvp16kf.mongodb.net/ml-compiler?retryWrites=true&w=majority";
+// 🟢 FIXED: Username updated to sheikhrahul18581_db_user to match Atlas exactly
+const productionURI = "mongodb+srv://sheikhrahul18581_db_user:Skrahul06@botalsepaisa.uvp16kf.mongodb.net/ml-compiler?retryWrites=true&w=majority&appName=botalsepaisa";
 
 console.log("⏳ Attempting direct MongoDB Atlas handshake...");
 
