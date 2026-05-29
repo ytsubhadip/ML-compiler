@@ -43,18 +43,13 @@ app.get("/status", (req, res) => {
 });
 
 // Dynamic port assignment for Render deployment, falling back to 8000 locally
+// Dynamic port assignment for Render deployment, falling back to 8000 locally
 const PORT = process.env.PORT || 8000;
 
-// Hardcoded explicit fallback string targeting your correct database partition directly
-const explicitCloudURI = "mongodb+srv://sheikhrahul8581_db_user:Skrahul06@botalsepaisa.uvp16kf.mongodb.net/ml-compiler?retryWrites=true&w=majority";
+// Direct, explicit hardcoded cloud connection string with absolutely no variable lookups
+const productionURI = "mongodb+srv://sheikhrahul8581_db_user:Skrahul06@botalsepaisa.uvp16kf.mongodb.net/ml-compiler?retryWrites=true&w=majority";
 
-// Sanity check: If env variable is missing or malformed by the terminal injector tool, enforce the pristine fallback string
-const finalURI = (process.env.MONGO_URI && process.env.MONGO_URI.includes("uvp16kf.mongodb.net"))
-    ? process.env.MONGO_URI
-    : explicitCloudURI;
-
-// Connect to MongoDB Atlas
-mongoose.connect(finalURI)
+mongoose.connect(productionURI)
     .then(() => {
         console.log("🚀 Live Database connected cleanly to MongoDB Atlas Cluster [ml-compiler]!");
         
