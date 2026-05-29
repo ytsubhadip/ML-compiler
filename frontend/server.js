@@ -20,27 +20,30 @@ app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-// Online IDE route
+// online IDE route
 app.get("/ide", function (req, res) {
-    res.sendFile(path.join(__dirname, "public", "ide.html"));
-});
+
+    res.sendFile(path.join(__dirname, "public", "pages/compiler_page/testCompiler.html"))
+})
+
+// signin route
+app.get("/signin",(req, res)=>{
+    res.sendFile(path.join(__dirname, "public", "pages/user_auth/signin.html"))
+} )
+
+// signup route
+app.get("/signup",(req, res)=>{
+    res.sendFile(path.join(__dirname, "public", "pages/user_auth/signup.html"))
+} )
+
 
 app.get("/status", (req, res) => {
     res.json({ status: "ok", uptime: process.uptime() });
 });
 
-const PORT = process.env.PORT || 8000;
-
-// Tell Mongoose to strictly use Render's injected environment string
-mongoose.connect(process.env.MONGO_URI)
-    .then(() => {
-        console.log("🚀 Live Database connected cleanly to MongoDB Atlas Cluster!");
-        
-        app.listen(PORT, () => {
-            console.log(`📡 Server is successfully running live on port ${PORT}`);
-        });
-    })
-    .catch(err => {
-        console.error("❌ Live Database connection failure during startup:", err);
-        process.exit(1);
-    });
+// Added the callback function to log the startup message
+const PORT = 8000;
+app.listen(PORT, () => {
+    console.log(` Server is successfully running on http://localhost:${PORT}`);
+    console.log(`  Access the IDE at http://localhost:${PORT}/ide`);
+});

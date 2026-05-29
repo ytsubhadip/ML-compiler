@@ -1,0 +1,462 @@
+/* =========================================================================
+   GLOBAL AUTH VIEWPORT OVERRIDES
+   ========================================================================= */
+html,
+body {
+    height: auto !important;
+    min-height: 100vh !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+}
+
+/* =========================================================================
+   STUNNING GLASSMORPHISM BACKGROUND GLOW BLOBS
+   ========================================================================= */
+.hero-bg-animate {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.glow-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.15;
+    mix-blend-mode: screen;
+    animation: blob-float 20s infinite alternate;
+}
+
+.blob-1 {
+    top: 10%;
+    left: 15%;
+    width: 250px;
+    height: 250px;
+    background: var(--accent-success); /* Student Green Glow */
+}
+
+.blob-2 {
+    bottom: 15%;
+    right: 15%;
+    width: 300px;
+    height: 300px;
+    background: #3b82f6; /* Teacher Blue Glow */
+    animation-delay: -5s;
+}
+
+.blob-3 {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 200px;
+    height: 200px;
+    background: #a855f7; /* Accent Purple Glow */
+    animation-delay: -10s;
+}
+
+.hero-grid-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 24px 24px;
+    opacity: 0.3;
+}
+
+@keyframes blob-float {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+    50% {
+        transform: translate(30px, -40px) scale(1.08);
+    }
+    100% {
+        transform: translate(-20px, 20px) scale(0.95);
+    }
+}
+
+/* =========================================================================
+   AUTHENTICATION LAYOUT & GLASSMORPHISM CARD STYLES
+   ========================================================================= */
+.auth-wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 16px;
+    position: relative;
+    z-index: 10;
+    box-sizing: border-box;
+}
+
+.auth-container {
+    width: 100%;
+    max-width: 400px; /* Reduced from 440px to make it smaller & center-focused */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: relative;
+    z-index: 10;
+}
+
+.back-to-home-link {
+    color: var(--text-muted);
+    text-decoration: none !important;
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.25s ease;
+    align-self: flex-start;
+    padding-left: 4px;
+    margin-bottom: 2px;
+}
+
+.back-to-home-link:hover {
+    color: var(--accent-success) !important;
+    transform: translateX(-3px);
+}
+
+.auth-card {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.06); /* Crystal clear white glass tint from image */
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.22); /* Bold high-end luminous glass border from image */
+    border-radius: 20px; /* Matching rounded corners from image */
+    padding: 28px 24px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.auth-card:hover {
+    border-color: rgba(255, 255, 255, 0.32);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+}
+
+.auth-header {
+    text-align: center;
+    margin-bottom: 20px; /* Reduced from 30px */
+}
+
+.auth-header .brand-icon {
+    font-size: 32px; /* Reduced from 40px */
+    color: var(--accent-success);
+    margin-bottom: 8px; /* Reduced from 12px */
+    filter: drop-shadow(0 0 10px rgba(46, 200, 102, 0.2));
+}
+
+.auth-header h2 {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 1.45rem; /* Reduced from 1.75rem */
+    color: var(--text-primary);
+    margin-bottom: 4px;
+}
+
+.auth-header p {
+    font-size: 0.82rem; /* Reduced from 0.9rem */
+    color: var(--text-muted);
+    margin-bottom: 0;
+    line-height: 1.35;
+}
+
+/* =========================================================================
+   FORM CONTROLS & UTILITIES
+   ========================================================================= */
+.auth-form-wrapper {
+    position: relative;
+    overflow: hidden;
+}
+
+.auth-form {
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.form-group {
+    margin-bottom: 14px; /* Reduced from 20px to keep inputs close and clean */
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.78rem; /* Reduced from 0.85rem */
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-wrapper i.input-icon {
+    position: absolute;
+    left: 4px; /* Perfectly aligned to the bottom line edge */
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.95rem;
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.input-control {
+    width: 100%;
+    /* Completely transparent backing & simple bottom underline like user's reference image */
+    background: transparent !important;
+    border: none !important;
+    border-bottom: 1.5px solid rgba(255, 255, 255, 0.3) !important;
+    color: var(--text-primary) !important;
+    border-radius: 0 !important;
+    padding: 8px 4px 8px 28px !important; /* Left space for icon, aligned to bottom line */
+    font-size: 0.95rem !important;
+    font-family: var(--font-sans);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-shadow: none !important;
+}
+
+.input-control::placeholder {
+    color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.input-control:focus {
+    background: transparent !important;
+    /* Soft premium neon green bottom line glow on active student mode selection */
+    border-bottom-color: var(--accent-success) !important;
+    box-shadow: 0 2px 0 rgba(46, 200, 102, 0.35) !important;
+    outline: none !important;
+}
+
+.input-wrapper:focus-within i.input-icon {
+    color: var(--accent-success);
+    filter: drop-shadow(0 0 6px rgba(46, 200, 102, 0.6));
+    transform: scale(1.05);
+}
+
+/* Eye Password Toggle Button */
+.toggle-password {
+    position: absolute;
+    right: 12px;
+    cursor: pointer;
+    color: var(--text-muted);
+    transition: color 0.2s ease;
+    font-size: 0.95rem;
+    padding: 4px;
+    z-index: 10;
+}
+
+.toggle-password:hover {
+    color: #ffffff;
+}
+
+/* Extra Form Actions */
+.form-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px; /* Reduced from 24px */
+    font-size: 0.8rem;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-muted);
+    cursor: pointer;
+    user-select: none;
+}
+
+.remember-me input {
+    cursor: pointer;
+    accent-color: var(--accent-success);
+    width: 14px;
+    height: 14px;
+}
+
+.forgot-password {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.forgot-password:hover {
+    color: var(--accent-success);
+}
+
+/* Auth Submit CTA Buttons */
+.btn-auth-submit {
+    width: 100%;
+    padding: 10px !important; /* Reduced from 12px */
+    border-radius: 8px !important;
+    font-family: var(--font-sans);
+    font-weight: 600 !important;
+    font-size: 0.9rem !important;
+    border: none !important;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.btn-signin-submit {
+    background-color: var(--accent-success) !important;
+    color: #0d0f12 !important;
+    box-shadow: 0 4px 12px rgba(46, 200, 102, 0.15);
+}
+
+.btn-signin-submit:hover {
+    background-color: var(--accent-success-bright) !important;
+    box-shadow: 0 0 15px rgba(46, 200, 102, 0.4);
+    transform: translateY(-1px);
+}
+
+.btn-signup-submit {
+    background-color: #ffffff !important;
+    color: #0d0f12 !important;
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15);
+}
+
+.btn-signup-submit:hover {
+    background-color: #f3f4f6 !important;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.35);
+    transform: translateY(-1px);
+}
+
+.btn-auth-submit:active {
+    transform: translateY(0);
+}
+
+/* =========================================================================
+   PREMIUM PERSONA SLIDER SWITCH (Student vs Teacher)
+   ========================================================================= */
+.persona-selector-container {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    display: flex;
+    position: relative;
+    padding: 3px;
+    margin-bottom: 18px; /* Reduced from 24px */
+    height: 38px; /* Reduced from 42px */
+}
+
+.persona-tab {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text-muted);
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 0.82rem; /* Reduced from 0.88rem */
+    cursor: pointer;
+    z-index: 2;
+    transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.persona-tab.active {
+    color: #ffffff;
+}
+
+.persona-indicator {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: calc(50% - 3px);
+    height: calc(100% - 6px);
+    background: rgba(46, 200, 102, 0.15);
+    border: 1px solid rgba(46, 200, 102, 0.3);
+    border-radius: 9px;
+    z-index: 1;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease, border-color 0.3s ease;
+    box-shadow: 0 4px 10px rgba(46, 200, 102, 0.1);
+}
+
+/* Slide to Teacher active states */
+.persona-selector-container.teacher-active .persona-indicator {
+    transform: translateX(100%);
+    background: rgba(59, 130, 246, 0.15); /* Translucent Blue for Teacher */
+    border-color: rgba(59, 130, 246, 0.4);
+    box-shadow: 0 4px 10px rgba(59, 130, 246, 0.15);
+}
+
+.persona-selector-container.teacher-active .persona-tab.active {
+    color: #3b82f6 !important; /* Teacher blue text highlight */
+}
+
+/* Dynamic slide animation for role-specific form groups */
+.form-group-dynamic {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    margin-bottom: 0;
+    transform: translateY(-10px);
+    transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), 
+                opacity 0.3s ease, 
+                transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                margin-bottom 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.form-group-dynamic.active {
+    max-height: 80px; /* Expands to natural size */
+    opacity: 1;
+    margin-bottom: 14px;
+    transform: translateY(0);
+}
+
+/* Focused input color adjust for Teacher mode */
+.persona-selector-container.teacher-active ~ .auth-form-wrapper .input-control:focus {
+    border-bottom-color: #3b82f6 !important;
+    /* Soft premium neon blue bottom line glow on active teacher mode selection */
+    box-shadow: 0 2px 0 rgba(59, 130, 246, 0.35) !important;
+    outline: none !important;
+}
+
+.persona-selector-container.teacher-active ~ .auth-form-wrapper .input-wrapper:focus-within i.input-icon {
+    color: #3b82f6 !important;
+    filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.6)) !important;
+    transform: scale(1.05);
+}
+
+/* Card Footer Redirect Link */
+.auth-card-footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 14px; /* Reduced from 20px */
+}
+
+.auth-redirect-link {
+    color: var(--accent-success) !important;
+    text-decoration: none !important;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.auth-redirect-link:hover {
+    color: var(--accent-success-bright) !important;
+    text-decoration: underline !important;
+}
+
+/* Adjust Teacher mode redirect link color to blue */
+.persona-selector-container.teacher-active ~ .auth-card-footer .auth-redirect-link {
+    color: #3b82f6 !important;
+}
+
+.persona-selector-container.teacher-active ~ .auth-card-footer .auth-redirect-link:hover {
+    color: #60a5fa !important;
+}

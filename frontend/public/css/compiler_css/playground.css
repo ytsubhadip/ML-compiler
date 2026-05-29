@@ -1,0 +1,299 @@
+/* IDE Main Workspace Layout */
+.ide-workspace {
+    height: calc(100vh - 64px);
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    background-color: #0d0f12;
+}
+
+.left-column {
+    height: 100%;
+    min-height: 0;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+}
+
+.right-column {
+    height: 100%;
+    min-height: 0;
+    padding: 16px 16px 16px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Premium Pane Cards */
+.pane-card {
+    background: #14161c;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+}
+
+.left-pane {
+    height: 100%;
+    min-height: 0;
+    padding: 24px;
+    overflow-y: auto;
+}
+
+.left-pane h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #4ade80;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding-bottom: 10px;
+}
+
+.left-pane h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #f3f4f6;
+    margin-top: 16px;
+    margin-bottom: 8px;
+}
+
+.left-pane h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #9ca3af;
+    margin-top: 12px;
+    margin-bottom: 6px;
+}
+
+.left-pane p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #d1d5db;
+    margin-bottom: 8px;
+}
+
+.left-pane pre {
+    background: #1e222b;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    color: #a7b5c9;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-family: "Rubik", "Fira Code", monospace;
+    overflow-x: auto;
+    margin-bottom: 10px;
+}
+
+.left-pane ul {
+    padding-left: 20px;
+    margin-bottom: 10px;
+}
+
+.left-pane li {
+    font-size: 0.9rem;
+    color: #9ca3af;
+    margin-bottom: 6px;
+}
+
+/* Right Pane - Code Editor Pane */
+.editor-pane {
+    flex: 1;
+    min-height: 0;
+}
+
+.editor-header {
+    height: 52px;
+    min-height: 52px;
+    background-color: #111317;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 0 0 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+}
+
+.editor-body {
+    flex: 1;
+    min-height: 0;
+    position: relative;
+    background-color: #14161c;
+}
+
+.editor-body .CodeMirror {
+    height: 100% !important;
+    width: 100% !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-family: 'Consolas', 'Fira Code', 'Courier New', monospace;
+    font-size: 14px;
+    background-color: #14161c !important;
+}
+
+/* Language Dropdown Select */
+.custom-select-wrapper {
+    width: 180px;
+}
+
+.custom-select {
+    background-color: #1c1e24 !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #e5e7eb !important;
+    font-weight: 500 !important;
+    border-radius: 6px !important;
+    padding: 6px 12px !important;
+    font-size: 0.875rem !important;
+    cursor: pointer;
+    box-shadow: none !important;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.custom-select:focus {
+    border-color: #10b981 !important;
+    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2) !important;
+}
+
+/* Action Buttons */
+.btn-action {
+    font-weight: 600 !important;
+    padding: 6px 16px !important;
+    border-radius: 6px !important;
+    font-size: 0.875rem !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: transform 0.1s, background-color 0.2s;
+}
+
+.btn-action:hover:not(:disabled) {
+    transform: translateY(-1px);
+}
+
+.btn-action:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+/* Right Pane - Output Console Pane */
+.console-pane {
+    height: 32%;
+    min-height: 160px;
+}
+
+.console-header {
+    height: 52px;
+    min-height: 40px;
+    background-color: #111317;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+}
+
+.console-header-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.console-body {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    background-color: #0b0d10;
+}
+
+#output {
+    background-color: #0b0d10 !important;
+    border: none !important;
+    color: #e5e7eb !important;
+    font-family: 'Consolas', 'Fira Code', 'Courier New', monospace !important;
+    font-size: 13.5px !important;
+    padding: 4px 8px !important;
+    resize: none !important;
+    outline: none !important;
+    flex: 1 !important;
+    min-height: 0;
+    width: 100% !important;
+    line-height: 1.5;
+    box-shadow: none !important;
+}
+
+.console-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 8px 0 8px;
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+    font-size: 0.8rem;
+    color: #6b7280;
+}
+
+.console-stat {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.console-stat-value {
+    color: #10b981;
+    font-weight: 600;
+}
+
+/* Console Dynamic States */
+.console-error-text {
+    color: #ef4444 !important; /* Premium red for errors */
+}
+
+.console-success-text {
+    color: #39e57f !important; /* Premium bright terminal green for output */
+}
+
+/* Console Status Badge */
+.badge-status {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.badge-status-idle {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: #9ca3af;
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+.badge-status-running {
+    background-color: rgba(245, 158, 11, 0.15);
+    color: #fbbf24;
+    border-color: rgba(245, 158, 11, 0.25);
+}
+
+.badge-status-accepted {
+    background-color: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+    border-color: rgba(16, 185, 129, 0.25);
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.05);
+}
+
+.badge-status-rejected {
+    background-color: rgba(239, 68, 68, 0.15);
+    color: #f87171;
+    border-color: rgba(239, 68, 68, 0.25);
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.05);
+}

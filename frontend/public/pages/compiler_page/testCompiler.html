@@ -22,7 +22,7 @@
   <script src="codemirror-5.65.21/addon/edit/closebrackets.js"></script>
   <script src="codemirror-5.65.21/mode/python/python.js"></script>
   <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/compiler.css">
+  <link rel="stylesheet" href="css/compiler_css/compiler.css">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,50 +35,84 @@
 </head>
 
 <body class="landing-page d-flex flex-column" style="height: 100vh; overflow: hidden;">
+  <!-- Starry background canvas backdrop (Fixed full screen) -->
+  <div class="starry-background-canvas">
+      <div id="stars"></div>
+      <div id="stars2"></div>
+      <div id="stars3"></div>
+  </div>
 
-  <nav class="navbar navbar-expand-lg" style="background-color: #121418;">
-    <div class="container-fluid">
-      <div>
-        <i class="fa-brands fa-magento" style="color: rgb(46, 200, 102); font-size:35px;"></i>
-      </div>
-      <a class="navbar-brand text-light outfit" href="index.html" style="font-size: 1.5rem;">ML compiler</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="margin-left: 70px;">
-          <li class="nav-item">
-            <a class="nav-link active text-light" aria-current="page" href="/">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active text-light" aria-current="page" href="/ide">Online IDE</a>
-          </li>
+<!-- navbar start -->
+  <nav class="custom-navbar">
+    <div class="nav-container">
+      <!-- Left: Logo & Branding -->
+      <a class="nav-brand" href="/">
+        <i class="fa-brands fa-magento nav-logo"></i>
+        <span class="nav-title">ML compiler</span>
+      </a>
+      
+      <!-- Center: Perfectly Centered Navigation Menu -->
+      <div class="nav-menu-wrapper" id="navMenuWrapper">
+        <ul class="nav-menu">
+          <li><a href="/" class="nav-link">Home</a></li>
+          <li><a href="/playground" class="nav-link">playground</a></li>
+          <li><a href="/ide" class="nav-link active">coding Test</a></li>
         </ul>
-        <div class="d-flex justify-content-between" style="gap: 40px; align-items: center;">
-          <div class="user">
-            <i class="bi bi-person-circle text-white" style="font-size: 2rem;"></i>
-          </div>
+        <!-- Mobile only actions inside the drawer -->
+        <div class="nav-actions-mobile">
+          <a href="/signin" class="btn-signin">Sign In</a>
+          <a href="/signup" class="btn-signup">Sign Up</a>
         </div>
       </div>
+      
+      <!-- Right: Actions -->
+      <div class="nav-actions">
+        <a href="/signin" class="btn-signin">Sign In</a>
+        <a href="/signup" class="btn-signup">Sign Up</a>
+      </div>
+      
+      <!-- Mobile Toggle Burger Button -->
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle Navigation">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
     </div>
   </nav>
+<!-- navbar end -->
 
   <div class="row gx-0 ide-workspace">
     <div class="col-12 col-lg-5 left-column">
       <div class="pane-card left-pane">
-        <h2>Problem Statement</h2>
-        <h3 id="question">Loading Question...</h3>
-        <h4>Example :</h4>
-        <pre id="exap"></pre>
-        <p id="description"></p>
-        <h3>Expected outcomes:</h3>
-        <pre id="sample"></pre>
-        <h4>Constraints:</h4>
-        <ul>
-          <li>2 ≤ nums.length ≤ 10⁴</li>
-          <li>-10⁹ ≤ nums[i] ≤ 10⁹</li>
-        </ul>
+        <div class="problem-header mb-3">
+          <span class="badge bg-success-subtle text-success border border-success-subtle mb-2 px-2 py-1" style="font-size: 0.75rem; font-weight: 600;">Easy</span>
+          <span class="badge bg-secondary-subtle text-secondary border border-secondary-subtle mb-2 px-2 py-1" style="font-size: 0.75rem; font-weight: 600;">ML Compiler</span>
+          <h2 id="question" class="problem-title mt-1" style="font-size: 1.5rem; font-weight: 700; color: var(--text-primary);">Loading Question...</h2>
+        </div>
+
+        <div class="problem-section mb-4">
+          <h3 style="font-size: 1.1rem; font-weight: 600; color: #4ade80; border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 6px; margin-bottom: 10px;"><i class="bi bi-file-text-fill me-2"></i>Description</h3>
+          <p id="description" class="problem-description" style="font-size: 0.95rem; line-height: 1.6; color: var(--text-secondary);"></p>
+        </div>
+
+        <div class="problem-section mb-4">
+          <h3 style="font-size: 1.1rem; font-weight: 600; color: #4ade80; border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 6px; margin-bottom: 10px;"><i class="bi bi-lightbulb-fill me-2"></i>Example</h3>
+          <pre id="exap" class="code-block" style="background: var(--bg-pre); border: 1px solid rgba(255, 255, 255, 0.04); color: #a7b5c9; padding: 12px; border-radius: 8px; font-size: 0.9rem; font-family: 'Rubik', var(--font-mono); overflow-x: auto;"></pre>
+        </div>
+
+        <div class="problem-section mb-4">
+          <h3 style="font-size: 1.1rem; font-weight: 600; color: #4ade80; border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 6px; margin-bottom: 10px;"><i class="bi bi-check-circle-fill me-2"></i>Expected Outcomes</h3>
+          <pre id="sample" class="code-block" style="background: var(--bg-pre); border: 1px solid rgba(255, 255, 255, 0.04); color: #a7b5c9; padding: 12px; border-radius: 8px; font-size: 0.9rem; font-family: 'Rubik', var(--font-mono); overflow-x: auto;"></pre>
+        </div>
+
+        <div class="problem-section mb-4">
+          <h3 style="font-size: 1.1rem; font-weight: 600; color: #4ade80; border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 6px; margin-bottom: 10px;"><i class="bi bi-shield-lock-fill me-2"></i>Constraints</h3>
+          <ul class="constraints-list" style="padding-left: 20px; color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;">
+            <li>2 ≤ nums.length ≤ 10⁴</li>
+            <li>-10⁹ ≤ nums[i] ≤ 10⁹</li>
+            <li>Standard time and space limits apply to code execution.</li>
+          </ul>
+        </div>
       </div>
     </div>
 
@@ -132,6 +166,19 @@
       </div>
     </div>
   </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const navToggle = document.getElementById('navToggle');
+      const navMenuWrapper = document.getElementById('navMenuWrapper');
+      
+      if (navToggle && navMenuWrapper) {
+        navToggle.addEventListener('click', function() {
+          navToggle.classList.toggle('active');
+          navMenuWrapper.classList.toggle('active');
+        });
+      }
+    });
+  </script>
 </body>
 
 <script>
@@ -143,7 +190,7 @@
   });
   editor.setSize("100%", "100%");
 </script>
-<script src="js/run.js"></script>
+<script src="js/run_compiler/testRun.js"></script>
 <script src="js/language.js"></script>
 <script src="js/loadQuestion.js"></script>
 </html>
