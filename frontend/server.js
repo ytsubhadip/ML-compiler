@@ -2,14 +2,13 @@ const path = require('path');
 const mongoose = require('mongoose');
 const express = require("express");
 
-// Safely load local .env variables if running outside production cloud runtime
 require('dotenv').config();
 
 const app = express();
 
 app.use(express.json());
 
-// CORS Configuration: Safe headers to prevent Cross-Origin execution blocks
+
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
@@ -20,16 +19,15 @@ app.use((req, res, next) => {
     next();
 });
 
-// Serve static assets out of the root public directory (css, js, asset, codemirror)
+
 app.use(express.static(path.join(__dirname, "public")));
 
-// Import Routes
+
 const compileRoutes = require("./routes/compile");
 
-// Use Routes
 app.use("/", compileRoutes);
 
-// Home route (Defaulting to signin page on landing)
+
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "pages", "user_auth", "signin.html"));
 });
@@ -39,7 +37,7 @@ app.get("/ide", function (req, res) {
     res.sendFile(path.join(__dirname, "public", "pages", "compiler_page", "testCompiler.html"));
 });
 
-app.get("/playgroundRun", (req, res) => {
+app.get("/playground", (req, res) => {
     
     res.sendFile(path.join(__dirname, "public", "pages", "compiler_page", "playground.html"));
 });
