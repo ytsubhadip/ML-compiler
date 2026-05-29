@@ -1,6 +1,9 @@
 const path = require('path');
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') }); 
 
+// 🚨 BUST THE INJECTOR: Force delete any corrupted cached string from memory
+delete process.env.MONGO_URI;
+
 const mongoose = require('mongoose');
 const express = require("express");
 
@@ -43,10 +46,9 @@ app.get("/status", (req, res) => {
 });
 
 // Dynamic port assignment for Render deployment, falling back to 8000 locally
-// Dynamic port assignment for Render deployment, falling back to 8000 locally
 const PORT = process.env.PORT || 8000;
 
-// Direct, explicit hardcoded cloud connection string with absolutely no variable lookups
+// Pristine connection URI explicitly targeting your /ml-compiler partition
 const productionURI = "mongodb+srv://sheikhrahul8581_db_user:Skrahul06@botalsepaisa.uvp16kf.mongodb.net/ml-compiler?retryWrites=true&w=majority";
 
 mongoose.connect(productionURI)
