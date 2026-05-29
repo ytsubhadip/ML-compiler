@@ -1,7 +1,7 @@
 const path = require('path');
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') }); 
 
-// 🚨 BUST THE INJECTOR: Force delete any corrupted cached string from memory
+// 🚨 BUST THE INJECTOR: Force delete any corrupted cached environment variables from memory
 delete process.env.MONGO_URI;
 
 const mongoose = require('mongoose');
@@ -51,16 +51,20 @@ const PORT = process.env.PORT || 8000;
 // Pristine connection URI explicitly targeting your /ml-compiler partition
 const productionURI = "mongodb+srv://sheikhrahul8581_db_user:Skrahul06@botalsepaisa.uvp16kf.mongodb.net/ml-compiler?retryWrites=true&w=majority";
 
-mongoose.connect(productionURI)
-    .then(() => {
-        console.log("🚀 Live Database connected cleanly to MongoDB Atlas Cluster [ml-compiler]!");
-        
-        app.listen(PORT, () => {
-            console.log(`📡 Server is successfully running live on port ${PORT}`);
-            console.log(`💻 Access the IDE live at /ide`);
-        });
-    })
-    .catch(err => {
-        console.error("❌ Live Database connection failure during startup:", err);
-        process.exit(1);
+console.log("⏳ Attempting direct MongoDB Atlas handshake...");
+
+mongoose.connect(productionURI, {
+    serverSelectionTimeoutMS: 5000 // Prevents hanging; fails fast so logs print clearly
+})
+.then(() => {
+    console.log("🚀 Live Database connected cleanly to MongoDB Atlas Cluster [ml-compiler]!");
+    
+    app.listen(PORT, () => {
+        console.log(`📡 Server is successfully running live on port ${PORT}`);
+        console.log(`💻 Access the IDE live at /ide`);
     });
+})
+.catch(err => {
+    console.error("❌ Live Database connection failure during startup:", err);
+    process.exit(1);
+});
