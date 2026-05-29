@@ -461,49 +461,4 @@ body {
     color: #60a5fa !important;
 }
 
-/* =========================================================================
-   BROWSER AUTOFILL DEFEATER (BLENDS WHITE BARS INTO DARK THEME)
-   ========================================================================= */
-input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus, 
-input:-webkit-autofill:active,
-.input-control:-webkit-autofill,
-.input-control:-webkit-autofill:hover,
-.input-control:-webkit-autofill:focus,
-.input-control:-webkit-autofill:active {
-    /* Forces an internal background match to your deep card container tone (#11141a / #16181d) */
-    -webkit-box-shadow: 0 0 0px 1000px #13161c inset !important;
-    
-    /* Forces your saved text credentials to stay crisp white instead of turning black */
-    -webkit-text-fill-color: #ffffff !important;
-    
-    /* Maintains your Outfit custom font family across browser state switches */
-    font-family: var(--font-sans) !important;
-    font-size: 0.95rem !important;
-    caret-color: #ffffff !important;
-    
-    /* Disables the browser's default highlight animation flash */
-    transition: background-color 5000s ease-in-out 0s;
-}
 
-/* Ensures input background stays transparent when active or focus-visible */
-.input-control:focus-visible {
-    background: transparent !important;
-    outline: none !important;
-}
-
-/* =========================================================================
-   DYNAMIC PERSONA ACCESS LAYER AUTOFILL MATCHES
-   ========================================================================= */
-/* Student Mode Focus State Override */
-.input-control:-webkit-autofill:focus {
-    border-bottom: 1.5px solid var(--accent-success) !important;
-    box-shadow: 0 2px 0 rgba(46, 200, 102, 0.35) !important;
-}
-
-/* Teacher Mode Focus State Override */
-.persona-selector-container.teacher-active ~ .auth-form-wrapper .input-control:-webkit-autofill:focus {
-    border-bottom: 1.5px solid #3b82f6 !important;
-    box-shadow: 0 2px 0 rgba(59, 130, 246, 0.35) !important;
-}
