@@ -88,7 +88,7 @@
                             <div class="input-wrapper">
                                 <i class="bi bi-lock-fill input-icon"></i>
                                 <input class="input-control password-input" type="password" id="signupPassword" required placeholder="••••••••">
-                                <i class="bi bi-eye-slash-fill toggle-password" onclick="togglePasswordVisibility('signupPassword', this)"></i>
+                                <i class="bi bi-eye-slash-fill toggle-password" id="toggleSignupPassword"></i>
                             </div>
                         </div>
 
@@ -97,7 +97,7 @@
                             <div class="input-wrapper">
                                 <i class="bi bi-shield-lock-fill input-icon"></i>
                                 <input class="input-control password-input" type="password" id="signupConfirmPassword" required placeholder="••••••••">
-                                <i class="bi bi-eye-slash-fill toggle-password" onclick="togglePasswordVisibility('signupConfirmPassword', this)"></i>
+                                <i class="bi bi-eye-slash-fill toggle-password" id="toggleSignupConfirmPassword"></i>
                             </div>
                         </div>
 
@@ -105,10 +105,8 @@
                             <i class="bi bi-person-plus-fill me-1"></i> Create Account
                         </button>
                     </form>
-
                 </div>
 
-                <!-- Footer Cross-Link -->
                 <div class="auth-card-footer mt-4 text-center">
                     <p class="mb-0 text-white" style="font-size: 0.9rem;">
                         Already have an account? <a href="/signin" class="auth-redirect-link">Sign In</a>
@@ -117,73 +115,8 @@
             </div>
         </div>
     </main>
-    <script>
 
-        const btnTabStudent = document.getElementById('btnTabStudent');
-        const btnTabTeacher = document.getElementById('btnTabTeacher');
-        const personaSelectorContainer = document.getElementById('personaSelectorContainer');
-        const groupStudentId = document.getElementById('groupStudentId');
-        const groupTeacherId = document.getElementById('groupTeacherId');
-        const signupStudentId = document.getElementById('signupStudentId');
-        const signupTeacherId = document.getElementById('signupTeacherId');
-        const btnSubmitSignup = document.getElementById('btnSubmitSignup');
-        const authSubtitle = document.getElementById('authSubtitle');
-
-        let activeRole = 'student';
-
-        function selectStudentRole() {
-            btnTabStudent.classList.add('active');
-            btnTabTeacher.classList.remove('active');
-            personaSelectorContainer.classList.remove('teacher-active');
-            groupStudentId.classList.add('active');
-            groupTeacherId.classList.remove('active');
-            signupStudentId.required = true;
-            signupTeacherId.required = false;
-
-            btnSubmitSignup.className = "btn-auth-submit btn-signup-submit";
-            btnSubmitSignup.removeAttribute('style');
-
-            activeRole = 'student';
-            authSubtitle.innerText = "Create an account to track your progress and compete globally as a student.";
-        }
-
-        function selectTeacherRole() {
-            btnTabStudent.classList.remove('active');
-            btnTabTeacher.classList.add('active');
-            personaSelectorContainer.classList.add('teacher-active');
-
-            groupStudentId.classList.remove('active');
-            groupTeacherId.classList.add('active');
-            signupStudentId.required = false;
-            signupTeacherId.required = true;
-
-            btnSubmitSignup.style.backgroundColor = "#ffffff";
-            btnSubmitSignup.style.borderColor = "#3b82f6";
-            btnSubmitSignup.style.color = "#0d0f12";
-
-            activeRole = 'teacher';
-            authSubtitle.innerText = "Create an account to track your progress and compete globally as a teacher.";
-        }
-
-        btnTabStudent.addEventListener('click', selectStudentRole);
-        btnTabTeacher.addEventListener('click', selectTeacherRole);
-
-        function togglePasswordVisibility(inputId, toggleIcon) {
-            const passwordInput = document.getElementById(inputId);
-            if (passwordInput) {
-                if (passwordInput.type === 'password') {
-                    passwordInput.type = 'text';
-                    toggleIcon.classList.remove('bi-eye-slash-fill');
-                    toggleIcon.classList.add('bi-eye-fill');
-                } else {
-                    passwordInput.type = 'password';
-                    toggleIcon.classList.remove('bi-eye-fill');
-                    toggleIcon.classList.add('bi-eye-slash-fill');
-                }
-            }
-        }
-
-    </script>
+    <script src="/js/auth/signup.js"></script>
 </body>
 
 </html>
