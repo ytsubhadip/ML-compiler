@@ -145,12 +145,11 @@ function showModernToast(message, isSuccess = false) {
 }
 
 document.addEventListener('DOMContentLoaded', () => updateConsolePet('idle'));
-const runBtn = document.getElementById("coderun")
+const runBtn = document.getElementById("coderun");
+
 runBtn.addEventListener('click', async function (e) {
     e.preventDefault();
 
-    
-   
     const optionLElement = document.getElementById("inlineFormSelectPref");
     const output = document.getElementById('output');
     const statusEl = document.getElementById('consoleStatus');
@@ -178,10 +177,11 @@ runBtn.addEventListener('click', async function (e) {
     };
 
     try {
-        runBtn.disabled = true
+        runBtn.disabled = true;
         runBtn.innerText = "Running...";
         
-        const response = await fetch("http://localhost:8000/compiler", {
+       
+        const response = await fetch("/compiler", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(code)
@@ -241,8 +241,8 @@ runBtn.addEventListener('click', async function (e) {
         typeConsoleOutput(output, `Runtime Interrupt: ${err.message}. Failed to bind compiler instances.`, 5);
         showModernToast("Network Exception: Compiler backplane unreachable.", false);
     }
-    finally{
+    finally {
         runBtn.disabled = false;
-        runBtn.innerHTML = `<i class="bi bi-play-fill"></i> Run Code`
+        runBtn.innerHTML = `<i class="bi bi-play-fill"></i> Run Code`;
     }
 });

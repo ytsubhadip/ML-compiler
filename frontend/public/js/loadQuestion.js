@@ -4,9 +4,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     const questionDescription = document.getElementById("description");
     const questionSample = document.getElementById("sample");
 
-    // The primary uvicorn server runs on port 8001 (FastAPI backend)
-    const FASTAPI_URL = "http://localhost:8001/question";
-    const FALLBACK_URL = "http://localhost:8000/api/question/active";
+    
+    const currentOrigin = window.location.origin; 
+    
+   
+    const FASTAPI_URL = currentOrigin.includes("localhost") 
+        ? "http://localhost:8001/question" 
+        : `${currentOrigin}/question`; 
+
+    const FALLBACK_URL = "/api/question/active"; 
 
     async function tryFetchQuestion(url) {
         const response = await fetch(url);
@@ -17,16 +23,16 @@ document.addEventListener("DOMContentLoaded", async () => {
     try {
         let data = null;
         try {
-            // Attempt to load from the main FastAPI server
+           
             data = await tryFetchQuestion(FASTAPI_URL);
         } catch (fastApiErr) {
-            console.warn("FastAPI primary server (port 8001) unreachable, trying Express proxy...", fastApiErr);
-            // Fallback to Express backend
+            console.warn("Primary FastAPI pipeline unavailable, checking relative proxy path...", fastApiErr);
+            
             data = await tryFetchQuestion(FALLBACK_URL);
         }
 
         if (data) {
-            // Standardize keys (Supports both FastAPI backend and legacy API shapes)
+           
             const titleText = data.question || data.title || "Reverse String";
             const descText = data.description || "Write a function that reverses a string. The input string is given as an array of characters s.";
             const rawExample = data.example;
@@ -40,7 +46,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 questionDescription.textContent = descText;
             }
             
-            // Format Example Content elegantly
+       
             if (questionExample) {
                 let exampleText = "";
                 if (rawExample) {
@@ -61,7 +67,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 questionExample.textContent = exampleText;
             }
 
-            // Format Expected Outcome Context elegantly
+           
             if (questionSample) {
                 let sampleText = "";
                 if (rawSample) {
@@ -86,7 +92,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     } catch (err) {
         console.error("Failed to load problem statement content from all endpoints:", err);
         
-        // Populate standard defaults (so it never stays stuck or blank even if servers are bootstrapping)
+        
         if (questionTitle) questionTitle.textContent = "Reverse String";
         if (questionDescription) {
             questionDescription.textContent = "Write a function that reverses a string. The input string is given as an array of characters s. You must do this by modifying the input array in-place with O(1) extra memory.";

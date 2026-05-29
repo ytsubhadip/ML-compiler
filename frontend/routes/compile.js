@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
-// 🟢 Bypassed temporarily to stop unhandled path exceptions on deployment
-// const { estimateComplexity } = require('../modules/complexity');
+
 const { performance } = require("perf_hooks");
 
 const languageMap = {
@@ -67,7 +66,7 @@ router.post("/compiler", async (req, res) => {
         const result = await executeCode(code, lang, input);
        
 
-        // Status ID 3 means "Accepted"
+        
         const isError = result.status && result.status.id !== 3;
 
         if (isError) {
