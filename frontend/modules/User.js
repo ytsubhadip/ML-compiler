@@ -20,6 +20,13 @@ const UserSchema = new mongoose.Schema({
         required: true,
         minlength: 6
     },
+    // 🌟 THE CRUCIAL ADDITION
+    role: {
+        type: String,
+        required: true,
+        enum: ['student', 'teacher'], // Restricts the values to only these two options
+        default: 'student'
+    },
     createdAt: {
         type: Date,
         default: Date.now
