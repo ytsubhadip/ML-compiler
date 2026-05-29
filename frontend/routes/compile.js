@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const { estimateComplexity } = require('../modules/complexity');
+// 🟢 Bypassed temporarily to stop unhandled path exceptions on deployment
+// const { estimateComplexity } = require('../modules/complexity');
 const { performance } = require("perf_hooks");
 
 const languageMap = {
