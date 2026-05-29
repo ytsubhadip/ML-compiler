@@ -45,8 +45,9 @@ app.get("/status", (req, res) => {
 const PORT = process.env.PORT || 8000;
 
 // 🟢 Use the verified sheikhrahul18581_db_user string with the srv driver layout
-const productionURI = "mongodb+srv://sheikhrahul18581_db_user:Skrahul06@botalsepaisa.uvp16kf.mongodb.net/ml-compiler?retryWrites=true&w=majority&appName=botalsepaisa";
-
+// 🟢 Explicit Shard Node Routing (Bypasses Render's failing SRV DNS lookups completely)
+// 🟢 Explicit Shard Node Routing (Bypasses Render's failing SRV DNS lookups completely)
+const productionURI = "mongodb://sheikhrahul18581_db_user:Skrahul06@ac-uvp16kf-shard-00-00.uvp16kf.mongodb.net:27017,ac-uvp16kf-shard-00-01.uvp16kf.mongodb.net:27017,ac-uvp16kf-shard-00-02.uvp16kf.mongodb.net:27017/ml-compiler?ssl=true&replicaSet=atlas-uvp16kf-shard-0&authSource=admin&retryWrites=true&w=majority";
 console.log("⏳ Attempting direct MongoDB Atlas handshake...");
 
 // Run a wrapper function to forcefully catch synchronous driver initialization crashes
