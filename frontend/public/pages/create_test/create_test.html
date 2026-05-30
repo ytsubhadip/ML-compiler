@@ -1,46 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Creat Test</title>
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="icon" type="image/png" href="../asset/magento-brands-solid-full.svg">
 
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Test</title>
+  <link rel="icon" type="image/png" href="../asset/magento-brands-solid-full.svg">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
     crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-
-  <link rel="stylesheet" href="codemirror-5.65.21/lib/codemirror.css">
-  <script src="codemirror-5.65.21/lib/codemirror.js"></script>
-  <script src="codemirror-5.65.21/mode/clike/clike.js"></script>
-  <link rel="stylesheet" href="codemirror-5.65.21/theme/darcula.css">
-  <link rel="stylesheet" href="codemirror-5.65.21/theme/night.css">
-  <script src="codemirror-5.65.21/addon/edit/closebrackets.js"></script>
-  <script src="codemirror-5.65.21/mode/python/python.js"></script>
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/compiler_css/compiler.css">
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
-
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
     integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/navbar.css">
 </head>
-<body>
-    <!-- navbar start -->
 
-<!-- navbar end -->
+<body>
+  <!-- navbar start -->
+  <nav class="custom-navbar">
+    <div class="nav-container">
+      <!-- Left: Logo & Branding -->
+      <a class="nav-brand" href="/">
+        <i class="fa-brands fa-magento nav-logo"></i>
+        <span class="nav-title">ML compiler</span>
+      </a>
+      <!-- Center: Perfectly Centered Navigation Menu -->
+      <div class="nav-menu-wrapper" id="navMenuWrapper">
+        <ul class="nav-menu">
+          <li><a href="/" class="nav-link ">Home</a></li>
+          <li><a href="/playground" class="nav-link ">playground</a></li>
+          <li><a href="/ide" class="nav-link ">coding Test</a></li>
+          <li><a href="/create-test" class="nav-link active">Create Test</a></li>
+        </ul>
+        <!-- Mobile only actions inside the drawer -->
+        <div class="nav-actions-mobile">
+          <a href="/signin" class="btn-signin">Sign In</a>
+          <a href="/signup" class="btn-signup">Sign Up</a>
+        </div>
+      </div>
+      <!-- Right: Actions -->
+      <div class="nav-actions">
+        <a href="/signin" class="btn-signin">Sign In</a>
+        <a href="/signup" class="btn-signup">Sign Up</a>
+      </div>
+      <!-- Mobile Toggle Burger Button -->
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle Navigation">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+    </div>
+  </nav>
+  <!-- navbar end -->
 </body>
 <script>
 
-      // navbar toggle button for mobile device
+  // navbar toggle button for mobile device
   document.addEventListener('DOMContentLoaded', function () {
     const navToggle = document.getElementById('navToggle');
     const navMenuWrapper = document.getElementById('navMenuWrapper');
@@ -53,4 +78,5 @@
     }
   });
 </script>
-</html> 
+
+</html>

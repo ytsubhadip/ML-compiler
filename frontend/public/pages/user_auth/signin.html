@@ -24,16 +24,16 @@
 </head>
 
 <body class="landing-page d-flex flex-column" style="min-height: 100vh; overflow-x: hidden;">
-    <div class="matrix-loader-overlay" id="globalLoaderScreen">
-    <div class="loader-animation-container">
-        <div class="loader-ring-outer"></div>
-        <div class="loader-ring-inner"></div>
-        <div class="loader-brand-pulse"></div>
-    </div>
-    <div class="loader-status-msg" id="loaderMessageField">Initializing System Core...</div>
-</div>
-    
-    
+    <!-- <div class="matrix-loader-overlay" id="globalLoaderScreen">
+        <div class="loader-animation-container">
+            <div class="loader-ring-outer"></div>
+            <div class="loader-ring-inner"></div>
+            <div class="loader-brand-pulse"></div>
+        </div>
+        <div class="loader-status-msg" id="loaderMessageField">Initializing System Core...</div>
+    </div> -->
+
+
     <div class="starry-background-canvas">
         <div id="stars"></div>
         <div id="stars2"></div>
@@ -42,7 +42,7 @@
     <main class="auth-wrapper">
         <div class="auth-container" style="position: relative; z-index: 10;">
             <a href="/" class="back-to-home-link"><i class="bi bi-arrow-left"></i> Back to Home</a>
-            
+
             <div class="auth-card">
                 <div class="auth-header">
                     <i class="fa-brands fa-magento brand-icon"></i>
@@ -66,7 +66,8 @@
                             <label for="signinEmail">Email Address</label>
                             <div class="input-wrapper">
                                 <i class="bi bi-envelope-fill input-icon"></i>
-                                <input class="input-control" type="email" id="signinEmail" required placeholder="name@domain.com">
+                                <input class="input-control" type="email" id="signinEmail" required
+                                    placeholder="name@domain.com">
                             </div>
                         </div>
 
@@ -74,8 +75,10 @@
                             <label for="signinPassword">Password</label>
                             <div class="input-wrapper">
                                 <i class="bi bi-lock-fill input-icon"></i>
-                                <input class="input-control password-input" type="password" id="signinPassword" required placeholder="••••••••">
-                                <i class="bi bi-eye-slash-fill toggle-password" onclick="togglePasswordVisibility('signinPassword', this)"></i>
+                                <input class="input-control password-input" type="password" id="signinPassword" required
+                                    placeholder="••••••••">
+                                <i class="bi bi-eye-slash-fill toggle-password"
+                                    onclick="togglePasswordVisibility('signinPassword', this)"></i>
                             </div>
                         </div>
 
@@ -146,7 +149,8 @@
             }
         }
     </script>
-   <script src="pages/user_auth/signin.js"></script>
+    <script src="js/user_auth/signin.js"></script>
+    <!-- <script src="js/navbar.js"></script> -->
 </body>
 
 </html>

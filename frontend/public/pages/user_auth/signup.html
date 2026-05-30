@@ -24,14 +24,14 @@
 </head>
 
 <body class="landing-page d-flex flex-column" style="min-height: 100vh; overflow-x: hidden;">
-    <div class="matrix-loader-overlay" id="globalLoaderScreen">
-    <div class="loader-animation-container">
-        <div class="loader-ring-outer"></div>
-        <div class="loader-ring-inner"></div>
-        <div class="loader-brand-pulse"></div>
-    </div>
-    <div class="loader-status-msg" id="loaderMessageField">Initializing System Core...</div>
-</div>
+    <!-- <div class="matrix-loader-overlay" id="globalLoaderScreen">
+        <div class="loader-animation-container">
+            <div class="loader-ring-outer"></div>
+            <div class="loader-ring-inner"></div>
+            <div class="loader-brand-pulse"></div>
+        </div>
+        <div class="loader-status-msg" id="loaderMessageField">Initializing System Core...</div>
+    </div> -->
     <div class="starry-background-canvas">
         <div id="stars"></div>
         <div id="stars2"></div>
@@ -40,7 +40,7 @@
     <main class="auth-wrapper">
         <div class="auth-container" style="position: relative; z-index: 10;">
             <a href="/" class="back-to-home-link"><i class="bi bi-arrow-left"></i> Back to Home</a>
-            
+
             <div class="auth-card">
                 <div class="auth-header">
                     <i class="fa-brands fa-magento brand-icon"></i>
@@ -64,7 +64,8 @@
                             <label for="signupName">Full Name</label>
                             <div class="input-wrapper">
                                 <i class="bi bi-person-fill input-icon"></i>
-                                <input class="input-control" type="text" id="signupName" required placeholder="full name">
+                                <input class="input-control" type="text" id="signupName" required
+                                    placeholder="full name">
                             </div>
                         </div>
 
@@ -72,7 +73,8 @@
                             <label for="signupEmail">Email Address</label>
                             <div class="input-wrapper">
                                 <i class="bi bi-envelope-fill input-icon"></i>
-                                <input class="input-control" type="email" id="signupEmail" required placeholder="name@domain.com">
+                                <input class="input-control" type="email" id="signupEmail" required
+                                    placeholder="name@domain.com">
                             </div>
                         </div>
 
@@ -80,7 +82,8 @@
                             <label for="signupStudentId">Student Roll Number</label>
                             <div class="input-wrapper">
                                 <i class="bi bi-card-list input-icon"></i>
-                                <input class="input-control" type="text" id="signupStudentId" required placeholder="28940524021">
+                                <input class="input-control" type="text" id="signupStudentId" required
+                                    placeholder="28940524021">
                             </div>
                         </div>
                         <div class="form-group form-group-dynamic" id="groupTeacherId">
@@ -95,8 +98,10 @@
                             <label for="signupPassword">Password</label>
                             <div class="input-wrapper">
                                 <i class="bi bi-lock-fill input-icon"></i>
-                                <input class="input-control password-input" type="password" id="signupPassword" required placeholder="••••••••">
-                                <i class="bi bi-eye-slash-fill toggle-password" onclick="togglePasswordVisibility('signupPassword', this)"></i>
+                                <input class="input-control password-input" type="password" id="signupPassword" required
+                                    placeholder="••••••••">
+                                <i class="bi bi-eye-slash-fill toggle-password"
+                                    onclick="togglePasswordVisibility('signupPassword', this)"></i>
                             </div>
                         </div>
 
@@ -104,8 +109,10 @@
                             <label for="signupConfirmPassword">Confirm Password</label>
                             <div class="input-wrapper">
                                 <i class="bi bi-shield-lock-fill input-icon"></i>
-                                <input class="input-control password-input" type="password" id="signupConfirmPassword" required placeholder="••••••••">
-                                <i class="bi bi-eye-slash-fill toggle-password" onclick="togglePasswordVisibility('signupConfirmPassword', this)"></i>
+                                <input class="input-control password-input" type="password" id="signupConfirmPassword"
+                                    required placeholder="••••••••">
+                                <i class="bi bi-eye-slash-fill toggle-password"
+                                    onclick="togglePasswordVisibility('signupConfirmPassword', this)"></i>
                             </div>
                         </div>
 
@@ -183,7 +190,7 @@
             }
         }
     </script>
-    <script src="pages/user_auth/signup.js"></script>
+    <script src="js/user_auth/signup.js"></script>
 </body>
 
 </html>

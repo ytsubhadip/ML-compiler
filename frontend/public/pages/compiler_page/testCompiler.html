@@ -4,16 +4,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ML Compiler</title>
+  <title>Coding Test</title>
   <link rel="icon" type="image/png" href="../asset/magento-brands-solid-full.svg">
-
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
     crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-
   <link rel="stylesheet" href="codemirror-5.65.21/lib/codemirror.css">
   <script src="codemirror-5.65.21/lib/codemirror.js"></script>
   <script src="codemirror-5.65.21/mode/clike/clike.js"></script>
@@ -21,52 +19,102 @@
   <link rel="stylesheet" href="codemirror-5.65.21/theme/night.css">
   <script src="codemirror-5.65.21/addon/edit/closebrackets.js"></script>
   <script src="codemirror-5.65.21/mode/python/python.js"></script>
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/compiler_css/compiler.css">
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
-
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
     integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/compiler_css/compiler.css">
 </head>
 
 <body class="landing-page d-flex flex-column" style="height: 100vh; overflow: hidden;">
 
-<!-- navbar start -->
-
-<!-- navbar end -->
+  <!-- navbar start -->
+  <nav class="custom-navbar">
+    <div class="nav-container">
+      <!-- Left: Logo & Branding -->
+      <a class="nav-brand" href="/">
+        <i class="fa-brands fa-magento nav-logo"></i>
+        <span class="nav-title">ML compiler</span>
+      </a>
+      <!-- Center: Perfectly Centered Navigation Menu -->
+      <div class="nav-menu-wrapper" id="navMenuWrapper">
+        <ul class="nav-menu">
+          <li><a href="/" class="nav-link ">Home</a></li>
+          <li><a href="/playground" class="nav-link">playground</a></li>
+          <li><a href="/ide" class="nav-link active">coding Test</a></li>
+          <li><a href="/create-test" class="nav-link">Create Test</a></li>
+        </ul>
+        <!-- Mobile only actions inside the drawer -->
+        <div class="nav-actions-mobile">
+          <a href="/signin" class="btn-signin">Sign In</a>
+          <a href="/signup" class="btn-signup">Sign Up</a>
+        </div>
+      </div>
+      <!-- Right: Actions -->
+      <div class="nav-actions">
+        <a href="/signin" class="btn-signin">Sign In</a>
+        <a href="/signup" class="btn-signup">Sign Up</a>
+      </div>
+      <!-- Mobile Toggle Burger Button -->
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle Navigation">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+    </div>
+  </nav>
+  <!-- navbar end -->
 
   <div class="row gx-0 ide-workspace">
+    <!-- question div -->
     <div class="col-12 col-lg-5 left-column">
       <div class="pane-card left-pane">
         <div class="problem-header mb-3">
-          <span class="badge bg-success-subtle text-success border border-success-subtle mb-2 px-2 py-1" style="font-size: 0.75rem; font-weight: 600;">Easy</span>
-          <span class="badge bg-secondary-subtle text-secondary border border-secondary-subtle mb-2 px-2 py-1" style="font-size: 0.75rem; font-weight: 600;">ML Compiler</span>
-          <h2 id="question" class="problem-title mt-1" style="font-size: 1.5rem; font-weight: 700; color: var(--text-primary);">Loading Question...</h2>
+          <span class="badge bg-success-subtle text-success border border-success-subtle mb-2 px-2 py-1"
+            style="font-size: 0.75rem; font-weight: 600;">Easy</span>
+          <span class="badge bg-secondary-subtle text-secondary border border-secondary-subtle mb-2 px-2 py-1"
+            style="font-size: 0.75rem; font-weight: 600;">ML Compiler</span>
+          <h2 id="question" class="problem-title mt-1"
+            style="font-size: 1.5rem; font-weight: 700; color: var(--text-primary);">Loading Question...</h2>
         </div>
 
         <div class="problem-section mb-4">
-          <h3 style="font-size: 1.1rem; font-weight: 600; color: #4ade80; border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 6px; margin-bottom: 10px;"><i class="bi bi-file-text-fill me-2"></i>Description</h3>
-          <p id="description" class="problem-description" style="font-size: 0.95rem; line-height: 1.6; color: var(--text-secondary);"></p>
+          <h3
+            style="font-size: 1.1rem; font-weight: 600; color: #4ade80; border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 6px; margin-bottom: 10px;">
+            <i class="bi bi-file-text-fill me-2"></i>Description</h3>
+          <p id="description" class="problem-description"
+            style="font-size: 0.95rem; line-height: 1.6; color: var(--text-secondary);"></p>
         </div>
 
         <div class="problem-section mb-4">
-          <h3 style="font-size: 1.1rem; font-weight: 600; color: #4ade80; border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 6px; margin-bottom: 10px;"><i class="bi bi-lightbulb-fill me-2"></i>Example</h3>
-          <pre id="exap" class="code-block" style="background: var(--bg-pre); border: 1px solid rgba(255, 255, 255, 0.04); color: #a7b5c9; padding: 12px; border-radius: 8px; font-size: 0.9rem; font-family: 'Rubik', var(--font-mono); overflow-x: auto;"></pre>
+          <h3
+            style="font-size: 1.1rem; font-weight: 600; color: #4ade80; border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 6px; margin-bottom: 10px;">
+            <i class="bi bi-lightbulb-fill me-2"></i>Example</h3>
+          <pre id="exap" class="code-block"
+            style="background: var(--bg-pre); border: 1px solid rgba(255, 255, 255, 0.04); color: #a7b5c9; padding: 12px; border-radius: 8px; font-size: 0.9rem; font-family: 'Rubik', var(--font-mono); overflow-x: auto;"></pre>
         </div>
 
         <div class="problem-section mb-4">
-          <h3 style="font-size: 1.1rem; font-weight: 600; color: #4ade80; border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 6px; margin-bottom: 10px;"><i class="bi bi-check-circle-fill me-2"></i>Expected Outcomes</h3>
-          <pre id="sample" class="code-block" style="background: var(--bg-pre); border: 1px solid rgba(255, 255, 255, 0.04); color: #a7b5c9; padding: 12px; border-radius: 8px; font-size: 0.9rem; font-family: 'Rubik', var(--font-mono); overflow-x: auto;"></pre>
+          <h3
+            style="font-size: 1.1rem; font-weight: 600; color: #4ade80; border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 6px; margin-bottom: 10px;">
+            <i class="bi bi-check-circle-fill me-2"></i>Expected Outcomes</h3>
+          <pre id="sample" class="code-block"
+            style="background: var(--bg-pre); border: 1px solid rgba(255, 255, 255, 0.04); color: #a7b5c9; padding: 12px; border-radius: 8px; font-size: 0.9rem; font-family: 'Rubik', var(--font-mono); overflow-x: auto;"></pre>
         </div>
 
         <div class="problem-section mb-4">
-          <h3 style="font-size: 1.1rem; font-weight: 600; color: #4ade80; border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 6px; margin-bottom: 10px;"><i class="bi bi-shield-lock-fill me-2"></i>Constraints</h3>
-          <ul class="constraints-list" style="padding-left: 20px; color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;">
+          <h3
+            style="font-size: 1.1rem; font-weight: 600; color: #4ade80; border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 6px; margin-bottom: 10px;">
+            <i class="bi bi-shield-lock-fill me-2"></i>Constraints</h3>
+          <ul class="constraints-list"
+            style="padding-left: 20px; color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;">
             <li>2 ≤ nums.length ≤ 10⁴</li>
             <li>-10⁹ ≤ nums[i] ≤ 10⁹</li>
             <li>Standard time and space limits apply to code execution.</li>
@@ -74,7 +122,7 @@
         </div>
       </div>
     </div>
-
+    <!-- coding editor div -->
     <div class="col-12 col-lg-7 right-column">
       <div class="pane-card editor-pane">
         <div class="editor-header">
@@ -110,7 +158,8 @@
           <span class="badge-status badge-status-idle" id="consoleStatus">Idle</span>
         </div>
         <div class="console-body">
-          <textarea class="form-control" id="output" readonly placeholder="Output will appear here after compiling..."></textarea>
+          <textarea class="form-control" id="output" readonly
+            placeholder="Output will appear here after compiling..."></textarea>
           <div class="console-footer">
             <div class="console-stat">
               <span>Execution Time:</span>
@@ -126,17 +175,7 @@
     </div>
   </div>
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const navToggle = document.getElementById('navToggle');
-      const navMenuWrapper = document.getElementById('navMenuWrapper');
-      
-      if (navToggle && navMenuWrapper) {
-        navToggle.addEventListener('click', function() {
-          navToggle.classList.toggle('active');
-          navMenuWrapper.classList.toggle('active');
-        });
-      }
-    });
+
   </script>
 </body>
 
@@ -147,9 +186,22 @@
     lineNumbers: true,
     autoCloseBrackets: true
   });
-  editor.setSize("100%", "100%");
+  // editor.setSize("100%", "100%");
+
+      document.addEventListener('DOMContentLoaded', function () {
+      const navToggle = document.getElementById('navToggle');
+      const navMenuWrapper = document.getElementById('navMenuWrapper');
+
+      if (navToggle && navMenuWrapper) {
+        navToggle.addEventListener('click', function () {
+          navToggle.classList.toggle('active');
+          navMenuWrapper.classList.toggle('active');
+        });
+      }
+    });
 </script>
 <script src="js/run_compiler/testRun.js"></script>
 <script src="js/language.js"></script>
 <script src="js/loadQuestion.js"></script>
+
 </html>
