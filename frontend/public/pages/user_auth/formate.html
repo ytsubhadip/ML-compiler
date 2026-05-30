@@ -22,6 +22,32 @@
     <link rel="stylesheet" href="css/home.css">
     <link rel="stylesheet" href="css/auth_css/signin.css">
     <link rel="stylesheet" href="css/animated-Element/button.css">
+
+    <style>
+        .button:hover i {
+            animation: spin-reverse 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spin-reverse {
+            from {
+                transform: rotate(360deg);
+            }
+
+            to {
+                transform: rotate(0deg);
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -37,7 +63,7 @@
             <div class="auth-card">
                 <div class="auth-header">
                     <i class="fa-brands fa-magento brand-icon"></i>
-                    <h2 id="authTitle">Formate Your Password</h2>
+                    <h2 id="authTitle">Formate Password</h2>
                 </div>
 
                 <div class="auth-form-wrapper">
@@ -79,9 +105,9 @@
                         <div class="button-container">
                             <button class="button btn-auth-submit" type="submit" id="btnSubmitSignup"
                                 aria-label="Submit small">
-                                <i class="fa-solid fa-arrow-rotate-left fa-spin fa-spin-reverse"
+                                <i class="fa-solid fa-arrow-rotate-left  fa-spin-reverse"
                                     style="color: rgb(20, 20, 21);"></i>
-                                    &nbsp;&nbsp;
+                                &nbsp;&nbsp;
                                 Formate&nbsp; Password
                             </button>
                         </div>
