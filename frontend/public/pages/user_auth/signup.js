@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     const signupForm = document.getElementById("formSignup");
-    const btnSubmitSignup = document.getElementById("btnSubmitSignup");
+    const loader = document.getElementById("globalLoaderScreen");
+    const loaderMsg = document.getElementById("loaderMessageField");
 
     if (signupForm) {
         signupForm.addEventListener("submit", async (e) => {
@@ -35,8 +36,10 @@ document.addEventListener("DOMContentLoaded", () => {
             };
 
             try {
-                btnSubmitSignup.disabled = true;
-                btnSubmitSignup.innerText = "Creating Account...";
+                if (loader && loaderMsg) {
+                    loaderMsg.innerText = "Encrypting Identity Coordinates...";
+                    loader.classList.add("active");
+                }
 
                 const response = await fetch("/signup", {
                     method: "POST",
@@ -45,17 +48,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
 
                 const data = await response.json();
-
                 if (!response.ok) throw new Error(data.error || "Registration rejected.");
 
-                alert("Account created successfully!");
-                window.location.href = "/signin";
+                if (loaderMsg) loaderMsg.innerText = "Identity Authenticated! Redirecting...";
+                
+                setTimeout(() => {
+                    window.location.href = "/signin";
+                }, 1200);
 
             } catch (err) {
+                if (loader) loader.classList.remove("active");
                 console.error("Signup error:", err);
                 alert(`Registration Failed: ${err.message}`);
-                btnSubmitSignup.disabled = false;
-                btnSubmitSignup.innerText = "Create Account";
             }
         });
     }

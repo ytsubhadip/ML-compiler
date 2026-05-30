@@ -110,14 +110,14 @@ app.post("/signin", async (req, res) => {
 
         return res.status(200).json({
             message: "Authentication successful.",
-            name: userProfile.name,
-            role: userProfile.role,
-            token: "mock-active-session-handshake-string"
+            name: userProfile.name,     
+            role: userProfile.role,      
+            token: "session-auth-token-" + userProfile._id
         });
 
     } catch (err) {
         console.error("Authentication query error:", err);
-        return res.status(500).json({ error: "Internal authentication layer error." });
+        return res.status(500).json({ error: "Internal server gate malfunction." });
     }
 });
 
