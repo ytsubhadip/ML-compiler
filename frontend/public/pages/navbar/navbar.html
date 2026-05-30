@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ML compiler</title>
+    <title>navbar</title>
     <link rel="icon" type="image/png" href="../asset/magento-brands-solid-full.svg">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
@@ -32,31 +32,61 @@
         integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
-
-<body style="overflow-y:auto; min-height:100vh;">
+<body>
     <!-- navbar start -->
-
-    <!-- navbar end -->
-    <div class="starry-background-canvas">
-        <div id="stars"></div>
-        <div id="stars2"></div>
-        <div id="stars3"></div>
+  <nav class="custom-navbar">
+    <div class="nav-container">
+      <!-- Left: Logo & Branding -->
+      <a class="nav-brand" href="/">
+        <i class="fa-brands fa-magento nav-logo"></i>
+        <span class="nav-title">ML compiler</span>
+      </a>
+      
+      <!-- Center: Perfectly Centered Navigation Menu -->
+      <div class="nav-menu-wrapper" id="navMenuWrapper">
+        <ul class="nav-menu">
+          <li><a href="/" class="nav-link">Home</a></li>
+          <li><a href="/playground" class="nav-link">playground</a></li>
+          <li><a href="/ide" class="nav-link active">coding Test</a></li>
+          <li><a href="/create-test" class="nav-link">Create Test</a></li>
+        </ul>
+        <!-- Mobile only actions inside the drawer -->
+        <div class="nav-actions-mobile">
+          <a href="/signin" class="btn-signin">Sign In</a>
+          <a href="/signup" class="btn-signup">Sign Up</a>
+        </div>
+      </div>
+      
+      <!-- Right: Actions -->
+      <div class="nav-actions">
+        <a href="/signin" class="btn-signin">Sign In</a>
+        <a href="/signup" class="btn-signup">Sign Up</a>
+      </div>
+      
+      <!-- Mobile Toggle Burger Button -->
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle Navigation">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
     </div>
-
-    <!-- hero end -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const navToggle = document.getElementById('navToggle');
-            const navMenuWrapper = document.getElementById('navMenuWrapper');
-            
-            if (navToggle && navMenuWrapper) {
-                navToggle.addEventListener('click', function() {
-                    navToggle.classList.toggle('active');
-                    navMenuWrapper.classList.toggle('active');
-                });
-            }
-        });
-    </script>
+  </nav>
+<!-- navbar end -->
+    
 </body>
 
+
+<script>
+     document.addEventListener('DOMContentLoaded', function() {
+      const navToggle = document.getElementById('navToggle');
+      const navMenuWrapper = document.getElementById('navMenuWrapper');
+      
+      if (navToggle && navMenuWrapper) {
+        navToggle.addEventListener('click', function() {
+          navToggle.classList.toggle('active');
+          navMenuWrapper.classList.toggle('active');
+        });
+      }
+    });
+</script>
 </html>
