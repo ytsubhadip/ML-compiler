@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     const signinForm = document.getElementById("formSignin");
-    const btnSubmitSignin = document.getElementById("btnSubmitSignin");
+    const loader = document.getElementById("globalLoaderScreen");
+    const loaderMsg = document.getElementById("loaderMessageField");
 
     if (signinForm) {
         signinForm.addEventListener("submit", async (e) => {
@@ -24,8 +25,10 @@ document.addEventListener("DOMContentLoaded", () => {
             };
 
             try {
-                btnSubmitSignin.disabled = true;
-                btnSubmitSignin.innerText = "Processing Auth...";
+                if (loader && loaderMsg) {
+                    loaderMsg.innerText = "Synchronizing Matrix Clearance...";
+                    loader.classList.add("active");
+                }
 
                 const response = await fetch("/signin", {
                     method: "POST",
@@ -34,17 +37,23 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
 
                 const data = await response.json();
-
                 if (!response.ok) throw new Error(data.error || "Authentication refused.");
 
-                alert("Authentication validated successfully!");
-                window.location.href = "/ide";
+                // Save user metadata 
+                localStorage.setItem("authToken", data.token);
+                localStorage.setItem("userRole", data.role);
+                localStorage.setItem("userName", data.name);
+
+                if (loaderMsg) loaderMsg.innerText = "Workspace Cleared! Generating Sandbox...";
+
+                setTimeout(() => {
+                    window.location.href = "/ide";
+                }, 1200);
 
             } catch (err) {
+                if (loader) loader.classList.remove("active");
                 console.error("AJAX error:", err);
                 alert(`Login Error: ${err.message}`);
-                btnSubmitSignin.disabled = false;
-                btnSubmitSignin.innerHTML = `<i class="bi bi-box-arrow-in-right me-1"></i> Sign In`;
             }
         });
     }

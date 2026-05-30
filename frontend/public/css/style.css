@@ -319,3 +319,153 @@ body {
 }
 
 
+/* =========================================================================
+   PREMIUM CYBERNETIC MATRIX LOADER SYSTEM
+   ========================================================================= */
+.matrix-loader-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(13, 15, 18, 0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.matrix-loader-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.loader-animation-container {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin-bottom: 24px;
+}
+
+.loader-ring-outer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 3px solid transparent;
+    border-top-color: #2ec866;
+    border-bottom-color: #2ec866;
+    border-radius: 50%;
+    animation: spin-clockwise 1.5s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    filter: drop-shadow(0 0 12px rgba(46, 200, 102, 0.4));
+}
+
+.loader-ring-inner {
+    position: absolute;
+    top: 15%;
+    left: 15%;
+    width: 70%;
+    height: 70%;
+    border: 2px solid transparent;
+    border-left-color: #3b82f6;
+    border-right-color: #3b82f6;
+    border-radius: 50%;
+    animation: spin-counter-clockwise 1s linear infinite;
+    filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.4));
+}
+
+.loader-brand-pulse {
+    position: absolute;
+    top: 35%;
+    left: 35%;
+    width: 30%;
+    height: 30%;
+    background: #ffffff;
+    border-radius: 50%;
+    animation: core-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+}
+
+.loader-status-msg {
+    font-family: 'Outfit', sans-serif;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    animation: text-pulse 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes spin-clockwise {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes spin-counter-clockwise {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(-360deg); }
+}
+
+@keyframes core-pulse {
+    0%, 100% { transform: scale(0.9); opacity: 0.6; }
+    50% { transform: scale(1.1); opacity: 1; }
+}
+
+@keyframes text-pulse {
+    0% { opacity: 0.6; transform: translateY(0); }
+    100% { opacity: 1; transform: translateY(-2px); }
+}
+
+/* =========================================================================
+   DYNAMIC AVATAR & DROPDOWN HEADER RULES
+   ========================================================================= */
+.profile-avatar-trigger {
+    cursor: pointer;
+    border-radius: 50%;
+    padding: 2px;
+    background: linear-gradient(135deg, #2ec866, #3b82f6);
+    box-shadow: 0 0 10px rgba(46, 200, 102, 0.2);
+    transition: transform 0.2s ease;
+}
+.profile-avatar-trigger:hover {
+    transform: scale(1.05);
+}
+.avatar-circle {
+    width: 36px;
+    height: 36px;
+    background: #16181d;
+    border-radius: 50%;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-family: 'Outfit', sans-serif;
+}
+.profile-dropdown-card {
+    position: absolute;
+    top: 55px;
+    right: 0;
+    width: 220px;
+    background: rgba(22, 24, 29, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 16px;
+    display: none;
+    z-index: 1000;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+.profile-dropdown-card.show {
+    display: block;
+    animation: slide-dropdown 0.2s ease-out forwards;
+}
+@keyframes slide-dropdown {
+    0% { opacity: 0; transform: translateY(-10px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
