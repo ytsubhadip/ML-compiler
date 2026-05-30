@@ -11,7 +11,12 @@ document.addEventListener("DOMContentLoaded", () => {
             const passwordInput = document.getElementById("signupPassword");
             const confirmPasswordInput = document.getElementById("signupConfirmPassword");
 
-            const currentRole = typeof activeRole !== "undefined" ? activeRole : "student";
+            let currentRole = "student";
+            const teacherTab = document.getElementById("btnTabTeacher");
+            if (teacherTab && teacherTab.classList.contains("active")) {
+                currentRole = "teacher";
+            }
+
             const roleIdentifierField = currentRole === 'student' 
                 ? document.getElementById("signupStudentId") 
                 : document.getElementById("signupTeacherId");

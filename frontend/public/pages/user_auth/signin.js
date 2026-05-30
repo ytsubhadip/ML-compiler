@@ -11,10 +11,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (!emailField || !passwordField) return;
 
+            let currentRole = "student";
+            const teacherTab = document.getElementById("btnTabTeacher");
+            if (teacherTab && teacherTab.classList.contains("active")) {
+                currentRole = "teacher";
+            }
+
             const payload = {
                 email: emailField.value.trim(),
                 password: passwordField.value,
-                role: typeof activeRole !== "undefined" ? activeRole : "student"
+                role: currentRole
             };
 
             try {
