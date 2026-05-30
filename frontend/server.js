@@ -53,6 +53,14 @@ app.get("/signup", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "pages", "user_auth", "signup.html"));
 });
 
+app.get("/password-formate",(req, res)=>{
+      res.sendFile(path.join(__dirname, "public", "pages", "user_auth", "formate.html"));
+})
+
+app.get("/create-test", (req, res)=>{
+    res.sendFile(path.join(__dirname, "public", "pages", "create_test", "create_test.html"))
+})
+app.get
 app.get("/status", (req, res) => {
     res.json({ status: "ok", uptime: process.uptime() });
 });
