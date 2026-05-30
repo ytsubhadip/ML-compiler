@@ -74,4 +74,19 @@
   </nav>
 <!-- navbar end -->
 </body>
+<script>
+
+      // navbar toggle button for mobile device
+  document.addEventListener('DOMContentLoaded', function () {
+    const navToggle = document.getElementById('navToggle');
+    const navMenuWrapper = document.getElementById('navMenuWrapper');
+
+    if (navToggle && navMenuWrapper) {
+      navToggle.addEventListener('click', function () {
+        navToggle.classList.toggle('active');
+        navMenuWrapper.classList.toggle('active');
+      });
+    }
+  });
+</script>
 </html> 
