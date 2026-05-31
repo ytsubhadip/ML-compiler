@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     const signupForm = document.getElementById("formSignup");
-    const loader = document.getElementById("globalLoaderScreen");
-    const loaderMsg = document.getElementById("loaderMessageField");
+    const submitBtn = document.getElementById("btnSubmitSignup");
 
     if (signupForm) {
         signupForm.addEventListener("submit", async (e) => {
@@ -36,9 +35,9 @@ document.addEventListener("DOMContentLoaded", () => {
             };
 
             try {
-                if (loader && loaderMsg) {
-                    loaderMsg.innerText = "Encrypting Identity Coordinates...";
-                    loader.classList.add("active");
+                if (submitBtn) {
+                    submitBtn.disabled = true;
+                    submitBtn.innerText = "Creating...";
                 }
 
                 const response = await fetch("/signup", {
@@ -50,14 +49,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 const data = await response.json();
                 if (!response.ok) throw new Error(data.error || "Registration rejected.");
 
-                if (loaderMsg) loaderMsg.innerText = "Identity Authenticated! Redirecting...";
-                
-                setTimeout(() => {
-                    window.location.href = "/signin";
-                }, 1200);
+                if (submitBtn) submitBtn.innerText = "Created";
+                setTimeout(() => window.location.href = "/signin", 900);
 
             } catch (err) {
-                if (loader) loader.classList.remove("active");
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerText = "Create Account";
+                }
                 console.error("Signup error:", err);
                 alert(`Registration Failed: ${err.message}`);
             }

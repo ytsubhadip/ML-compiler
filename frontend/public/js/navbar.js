@@ -1,51 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // =========================================================================
-    // 1. INJECT UNIVERSAL DOMINO LOADER ELEMENT ON EVERY PAGE LOAD
-    // =========================================================================
-    const globalLoaderHTML = `
-        <div class="matrix-loader-overlay" id="globalPageLoader">
-            <div class="spinner">
-                <span></span><span></span><span></span><span></span>
-                <span></span><span></span><span></span><span></span>
-            </div>
-            <div class="loader-status-msg" id="globalLoaderText">Syncing Environment...</div>
-        </div>
-    `;
-    document.body.insertAdjacentHTML("afterbegin", globalLoaderHTML);
-    const pageLoader = document.getElementById("globalPageLoader");
-    const loaderText = document.getElementById("globalLoaderText");
+    // Loader removed: global page loader injection intentionally disabled.
 
-    // Smoothly fade out the loader once the current page finishes rendering
-    setTimeout(() => {
-        if (pageLoader) pageLoader.classList.remove("active");
-    }, 300);
-
-    // =========================================================================
-    // 2. THE TRANSITION INTERCEPTOR (Triggers loader on clicking ANY link)
-    // =========================================================================
-    document.addEventListener("click", (e) => {
-        const anchor = e.target.closest("a");
-        if (!anchor) return;
-
-        const targetURL = anchor.getAttribute("href");
-        
-        // Skip default interception behavior for dead links, buttons, or blank tabs
-        if (!targetURL || targetURL.startsWith("#") || targetURL.startsWith("javascript:") || anchor.getAttribute("target") === "_blank") {
-            return;
-        }
-
-        // Intercept navigation to show the domino loader during server latency delays
-        if (pageLoader) {
-            e.preventDefault(); // Stop immediate jump
-            if (loaderText) loaderText.innerText = "Compiling Next Module...";
-            pageLoader.classList.add("active"); // Run Dominoes!
-
-            // Allow short animation window then hand over destination routing to browser
-            setTimeout(() => {
-                window.location.href = targetURL;
-            }, 450);
-        }
-    });
+    // Navigation interception removed to avoid showing a global loader on link clicks.
 
     // =========================================================================
     // 3. DYNAMIC ROLE-BASED NAVBAR GENERATION
@@ -140,29 +96,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Attach Avatar profile dropdown card toggles and logout tracking rules
     if (token) {
-        const trigger = document.getElementById("profileTrigger");
-        const dropdown = document.getElementById("profileDropdown");
+        // Support multiple navbar placements (desktop + mobile) by attaching
+        // handlers to all matching elements instead of relying on unique IDs.
+        const triggers = Array.from(document.querySelectorAll('.profile-avatar-trigger'));
+        const dropdowns = Array.from(document.querySelectorAll('.profile-dropdown-card'));
 
-        if (trigger && dropdown) {
-            trigger.addEventListener("click", (e) => {
+        triggers.forEach((trigger, idx) => {
+            const dropdown = dropdowns[idx] || dropdowns[0];
+            if (!dropdown) return;
+            trigger.addEventListener('click', (e) => {
                 e.stopPropagation();
-                dropdown.classList.toggle("show");
+                dropdown.classList.toggle('show');
             });
-            document.addEventListener("click", () => dropdown.classList.remove("show"));
-        }
+            // Ensure clicking outside closes this dropdown
+            document.addEventListener('click', () => dropdown.classList.remove('show'));
+        });
 
-        const logoutBtn = document.getElementById("btnLogoutAction");
-        if (logoutBtn) {
-            logoutBtn.addEventListener("click", () => {
-                if (pageLoader && loaderText) {
-                    loaderText.innerText = "Safely Disconnecting...";
-                    pageLoader.classList.add("active");
-                }
-                setTimeout(() => {
-                    localStorage.clear();
-                    window.location.href = "/signin";
-                }, 600);
+        // Attach logout handler to every logout button instance
+        const logoutButtons = document.querySelectorAll('.dropdown-logout-btn');
+        logoutButtons.forEach((btn) => {
+            btn.addEventListener('click', () => {
+                localStorage.clear();
+                window.location.href = '/signin';
             });
-        }
+        });
     }
 });

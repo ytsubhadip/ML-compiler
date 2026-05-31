@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     const signinForm = document.getElementById("formSignin");
-    const loader = document.getElementById("globalLoaderScreen");
-    const loaderMsg = document.getElementById("loaderMessageField");
+    const submitBtn = document.getElementById("btnSubmitSignin");
 
     if (signinForm) {
         signinForm.addEventListener("submit", async (e) => {
@@ -25,9 +24,9 @@ document.addEventListener("DOMContentLoaded", () => {
             };
 
             try {
-                if (loader && loaderMsg) {
-                    loaderMsg.innerText = "Synchronizing Matrix Clearance...";
-                    loader.classList.add("active");
+                if (submitBtn) {
+                    submitBtn.disabled = true;
+                    submitBtn.innerText = "Signing in...";
                 }
 
                 const response = await fetch("/signin", {
@@ -44,14 +43,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 localStorage.setItem("userRole", data.role);
                 localStorage.setItem("userName", data.name);
 
-                if (loaderMsg) loaderMsg.innerText = "Workspace Cleared! Generating Sandbox...";
-
-                setTimeout(() => {
-                    window.location.href = "/ide";
-                }, 1200);
+                if (submitBtn) submitBtn.innerText = "Signed in";
+                setTimeout(() => window.location.href = "/ide", 800);
 
             } catch (err) {
-                if (loader) loader.classList.remove("active");
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerText = "Sign In";
+                }
                 console.error("AJAX error:", err);
                 alert(`Login Error: ${err.message}`);
             }

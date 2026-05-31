@@ -8,49 +8,9 @@
  */
 
 document.addEventListener("DOMContentLoaded", () => {
-    // =========================================================================
-    // 1. INJECT LOADER OVERLAY DIRECTLY INTO DOM
-    // =========================================================================
-    const globalLoaderHTML = `
-        <div class="matrix-loader-overlay" id="globalPageLoader">
-            <div class="spinner">
-                <span></span><span></span><span></span><span></span>
-                <span></span><span></span><span></span><span></span>
-            </div>
-            <div class="loader-status-msg" id="globalLoaderText">Syncing Environment...</div>
-        </div>
-    `;
-    document.body.insertAdjacentHTML("afterbegin", globalLoaderHTML);
-    const pageLoader = document.getElementById("globalPageLoader");
-    const loaderText = document.getElementById("globalLoaderText");
+    // Global loader disabled: no overlay will be injected into pages.
 
-    // Smoothly hide loading screen once current assets render
-    setTimeout(() => {
-        if (pageLoader) pageLoader.classList.remove("active");
-    }, 300);
-
-    // =========================================================================
-    // 2. GLOBAL LINK CLICK INTERCEPTOR (Fires dominoes on redirection lag)
-    // =========================================================================
-    document.addEventListener("click", (e) => {
-        const anchor = e.target.closest("a");
-        if (!anchor) return;
-
-        const targetURL = anchor.getAttribute("href");
-        if (!targetURL || targetURL.startsWith("#") || targetURL.startsWith("javascript:") || anchor.getAttribute("target") === "_blank") {
-            return;
-        }
-
-        if (pageLoader) {
-            e.preventDefault(); // Hold redirection process
-            if (loaderText) loaderText.innerText = "Compiling Next Module...";
-            pageLoader.classList.add("active"); // Trigger Domino Trail
-            
-            setTimeout(() => {
-                window.location.href = targetURL;
-            }, 400);
-        }
-    });
+    // Navigation interception removed: links behave normally without a global loader.
 
     // =========================================================================
     // 3. AUTO-GENERATE OR TARGET NAVBAR SHELL Container
@@ -161,14 +121,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const logoutBtn = document.getElementById("btnLogoutAction");
         if (logoutBtn) {
             logoutBtn.addEventListener("click", function() {
-                if (pageLoader && loaderText) {
-                    loaderText.innerText = "De-allocating Session Context...";
-                    pageLoader.classList.add("active");
-                }
-                setTimeout(() => {
-                    localStorage.clear();
-                    window.location.href = "/signin";
-                }, 600);
+                localStorage.clear();
+                window.location.href = "/signin";
             });
         }
     }
