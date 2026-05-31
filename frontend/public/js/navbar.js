@@ -45,6 +45,9 @@ document.addEventListener("DOMContentLoaded", () => {
                         <span class="user-role-badge">${role.toUpperCase()} SYSTEM</span>
                     </div>
                     <hr class="dropdown-divider">
+                    <button class="dropdown-profile-btn" id="btnProfileAction">
+                        <i class="bi bi-person-circle"></i> View Profile
+                    </button>
                     <button class="dropdown-logout-btn" id="btnLogoutAction">
                         <i class="bi bi-box-arrow-left"></i> Log Out
                     </button>
@@ -96,29 +99,57 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Attach Avatar profile dropdown card toggles and logout tracking rules
     if (token) {
-        // Support multiple navbar placements (desktop + mobile) by attaching
-        // handlers to all matching elements instead of relying on unique IDs.
-        const triggers = Array.from(document.querySelectorAll('.profile-avatar-trigger'));
-        const dropdowns = Array.from(document.querySelectorAll('.profile-dropdown-card'));
-
-        triggers.forEach((trigger, idx) => {
-            const dropdown = dropdowns[idx] || dropdowns[0];
-            if (!dropdown) return;
-            trigger.addEventListener('click', (e) => {
+        // Toggle dropdown locally inside the parent menu on trigger click
+        document.addEventListener("click", (e) => {
+            const trigger = e.target.closest(".profile-avatar-trigger");
+            if (trigger) {
                 e.stopPropagation();
-                dropdown.classList.toggle('show');
-            });
-            // Ensure clicking outside closes this dropdown
-            document.addEventListener('click', () => dropdown.classList.remove('show'));
+                
+                // Find local dropdown card (supports multiple instances like desktop + mobile)
+                const menu = trigger.closest(".user-profile-menu");
+                const dropdown = menu?.querySelector(".profile-dropdown-card");
+                
+                if (dropdown) {
+                    const isShown = dropdown.classList.contains("show");
+                    
+                    // Close all profile dropdowns first
+                    document.querySelectorAll(".profile-dropdown-card.show").forEach((d) => {
+                        d.classList.remove("show");
+                    });
+                    
+                    // Toggle local dropdown state
+                    if (!isShown) {
+                        dropdown.classList.add("show");
+                    }
+                }
+                return;
+            }
+
+            // Close all open dropdowns on clicking anywhere outside
+            if (!e.target.closest(".user-profile-menu")) {
+                document.querySelectorAll(".profile-dropdown-card.show").forEach((d) => {
+                    d.classList.remove("show");
+                });
+            }
         });
 
-        // Attach logout handler to every logout button instance
-        const logoutButtons = document.querySelectorAll('.dropdown-logout-btn');
-        logoutButtons.forEach((btn) => {
-            btn.addEventListener('click', () => {
+        // Wire delegated handlers for Profile and Log Out actions globally (robust and simple)
+        document.addEventListener("click", (e) => {
+            const profileBtn = e.target.closest(".dropdown-profile-btn");
+            if (profileBtn) {
+                e.stopPropagation();
+                document.querySelectorAll(".profile-dropdown-card.show").forEach(d => d.classList.remove("show"));
+                window.location.href = "/profile";
+                return;
+            }
+
+            const logoutBtn = e.target.closest(".dropdown-logout-btn");
+            if (logoutBtn) {
+                e.stopPropagation();
                 localStorage.clear();
-                window.location.href = '/signin';
-            });
+                window.location.href = "/signin";
+                return;
+            }
         });
     }
 });

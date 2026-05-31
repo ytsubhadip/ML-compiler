@@ -44,7 +44,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 localStorage.setItem("userName", data.name);
 
                 if (submitBtn) submitBtn.innerText = "Signed in";
-                setTimeout(() => window.location.href = "/ide", 800);
+                // Redirect based on role (server-provided role preferred)
+                const roleAfter = (data.role || currentRole || '').toString().toLowerCase();
+                const dest = roleAfter === 'teacher' ? '/create-test' : '/ide';
+                setTimeout(() => window.location.href = dest, 600);
 
             } catch (err) {
                 if (submitBtn) {

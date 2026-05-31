@@ -153,6 +153,10 @@
 .dropdown-logout-btn { width:100%; background: linear-gradient(180deg, rgba(239,68,68,0.06), rgba(239,68,68,0.03)); color:#ff6b6b; border:1px solid rgba(239,68,68,0.12); padding:8px 10px; border-radius:8px; font-weight:600; cursor:pointer; }
 .dropdown-logout-btn:hover { box-shadow: 0 6px 18px rgba(239,68,68,0.08); transform: translateY(-1px); }
 
+.dropdown-profile-btn { width:100%; background: linear-gradient(180deg, rgba(46,200,102,0.06), rgba(46,200,102,0.03)); color:#2ec866; border:1px solid rgba(46,200,102,0.12); padding:8px 10px; border-radius:8px; font-weight:600; cursor:pointer; margin-bottom:8px; text-align:left; }
+.dropdown-profile-btn i { margin-right:8px; }
+.dropdown-profile-btn:hover { box-shadow: 0 6px 18px rgba(46,200,102,0.06); transform: translateY(-1px); }
+
 @keyframes dropdownSlide { 0% { opacity: 0; transform: translateY(-8px); } 100% { opacity: 1; transform: translateY(0); } }
 
 /* Mobile: dropdown should be full-width inside drawer */
