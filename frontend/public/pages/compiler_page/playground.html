@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -22,9 +21,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
-  <link
-    href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
     integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -34,8 +31,8 @@
 </head>
 
 <body class="landing-page d-flex flex-column" style="height: 100vh; overflow: hidden;">
-
-  
+// For Dynamic Navbar
+  <nav class="custom-navbar"></nav>
 
   <div class="row gx-0 ide-workspace" style="height:calc(100vh - 64px)">
     <div class="col-12">
@@ -93,30 +90,20 @@
       </div>
     </div>
   </div>
+
+  <script>
+    var editor = CodeMirror.fromTextArea(document.getElementById('editor'), {
+      mode: "text/x-c++src",
+      theme: "darcula",
+      lineNumbers: true,
+      autoCloseBrackets: true
+    })
+  </script>
+// For Dynamic Navbar
+  <script src="/js/navbar.js"></script>
+
+  <script src="js/run_compiler/playgroundRun.js"></script>
+  <script src="js/language.js"></script>
+
 </body>
-
-<script>
-  var editor = CodeMirror.fromTextArea(document.getElementById('editor'), {
-    mode: "text/x-c++src",
-    theme: "darcula",
-    lineNumbers: true,
-    autoCloseBrackets: true
-  })
-
-  // navbar toggle button for mobile device
-  document.addEventListener('DOMContentLoaded', function () {
-    const navToggle = document.getElementById('navToggle');
-    const navMenuWrapper = document.getElementById('navMenuWrapper');
-
-    if (navToggle && navMenuWrapper) {
-      navToggle.addEventListener('click', function () {
-        navToggle.classList.toggle('active');
-        navMenuWrapper.classList.toggle('active');
-      });
-    }
-  });
-</script>
-<script src="js/run_compiler/playgroundRun.js"></script>
-<script src="js/language.js"></script>
-
 </html>
