@@ -24,10 +24,55 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
         integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        /* Embedded Styles to ensure immediate override cascade priority */
+        .matrix-loader-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(13, 15, 18, 0.96);
+            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            z-index: 999999; opacity: 0; pointer-events: none;
+            transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .matrix-loader-overlay.active { opacity: 1; pointer-events: auto; }
+        .spinner {
+            position: relative; width: 60px; height: 60px;
+            display: flex; justify-content: center; align-items: center;
+            margin-bottom: 25px; margin-left: 35px;
+        }
+        .spinner span {
+            position: absolute; top: 50%; left: var(--left);
+            width: 35px; height: 7px; background: #2ec866;
+            animation: dominos 1s ease infinite;
+            box-shadow: 0px 4px 12px rgba(46, 200, 102, 0.3);
+        }
+        .spinner span:nth-child(1) { --left: 80px; animation-delay: 0.125s; }
+        .spinner span:nth-child(2) { --left: 70px; animation-delay: 0.3s; }
+        .spinner span:nth-child(3) { left: 60px; animation-delay: 0.425s; }
+        .spinner span:nth-child(4) { animation-delay: 0.54s; left: 50px; }
+        .spinner span:nth-child(5) { animation-delay: 0.665s; left: 40px; }
+        .spinner span:nth-child(6) { animation-delay: 0.79s; left: 30px; }
+        .spinner span:nth-child(7) { animation-delay: 0.915s; left: 20px; }
+        .spinner span:nth-child(8) { left: 10px; }
+        @keyframes dominos { 50% { opacity: 0.4; } 75% { transform: rotate(90deg); } 80% { opacity: 1; } }
+        .loader-status-msg { font-family: 'Outfit', sans-serif; color: #ffffff; font-weight: 500; font-size: 0.95rem; letter-spacing: 2px; text-transform: uppercase; }
+        .user-profile-menu { position: relative; display: inline-block; }
+        .profile-avatar-trigger { cursor: pointer; border-radius: 50%; padding: 2px; background: linear-gradient(135deg, #2ec866, #3b82f6); box-shadow: 0 0 12px rgba(46, 200, 102, 0.3); transition: transform 0.2s ease; }
+        .profile-avatar-trigger:hover { transform: scale(1.05); }
+        .avatar-circle { width: 38px; height: 38px; background: #16181d; border-radius: 50%; color: #ffffff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-family: 'Outfit', sans-serif; font-size: 1.1rem; }
+        .profile-dropdown-card { position: absolute; top: 55px; right: 0; width: 240px; background: rgba(22, 24, 29, 0.98); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 16px; display: none; z-index: 100000; box-shadow: 0 12px 40px rgba(0, 0, 0, 0.65); backdrop-filter: blur(10px); }
+        .profile-dropdown-card.show { display: block; animation: dropdownSlideEffect 0.25s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+        .dropdown-header h6 { color: #ffffff; margin: 0 0 4px 0; font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 1rem; text-align: left; }
+        .user-role-badge { font-size: 0.75rem; background: rgba(59, 130, 246, 0.15); color: #3b82f6; padding: 2px 8px; border-radius: 6px; font-family: 'Rubik', sans-serif; font-weight: 500; }
+        .dropdown-divider { border-top: 1px solid rgba(255, 255, 255, 0.08); margin: 12px 0; }
+        .dropdown-logout-btn { width: 100%; background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); padding: 8px 12px; border-radius: 8px; font-family: 'Outfit', sans-serif; font-weight: 500; font-size: 0.9rem; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; }
+        @keyframes dropdownSlideEffect { 0% { opacity: 0; transform: translateY(-12px); } 100% { opacity: 1; transform: translateY(0); } }
+    </style>
 </head>
 <body>
 
@@ -51,12 +96,10 @@
           <li><a href="/" class="nav-link" id="navHome">Home</a></li>
           <li><a href="/playground" class="nav-link" id="navPlayground">playground</a></li>
           </ul>
-        <div class="nav-actions-mobile" id="dynamicMobileActions">
-          </div>
+        <div class="nav-actions-mobile" id="dynamicMobileActions"></div>
       </div>
       
-      <div class="nav-actions" id="dynamicDesktopActions">
-          </div>
+      <div class="nav-actions" id="dynamicDesktopActions"></div>
       
       <button class="nav-toggle" id="navToggle" aria-label="Toggle Navigation">
         <span class="bar"></span>
@@ -69,41 +112,34 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        
         const pageLoader = document.getElementById("globalPageLoader");
         const loaderText = document.getElementById("globalLoaderText");
 
-        if (pageLoader) {
-          
-            setTimeout(() => {
-                pageLoader.classList.remove("active");
-            }, 300);
-        }
+        setTimeout(() => {
+            if (pageLoader) pageLoader.classList.remove("active");
+        }, 350);
 
-      
+        // Global Action Interceptor for domino loaders
         document.addEventListener("click", function(e) {
             const anchor = e.target.closest("a");
             if (!anchor) return;
 
             const targetURL = anchor.getAttribute("href");
-            
-           
             if (!targetURL || targetURL.startsWith("#") || targetURL.startsWith("javascript:") || anchor.getAttribute("target") === "_blank") {
                 return;
             }
 
             if (pageLoader) {
-                e.preventDefault(); 
+                e.preventDefault();
                 if (loaderText) loaderText.innerText = "Compiling Next Module...";
-                pageLoader.classList.add("active"); 
-                
+                pageLoader.classList.add("active");
                 setTimeout(() => {
                     window.location.href = targetURL;
                 }, 400);
             }
         });
 
-        
+        // Parse Token Profiles from browser session state
         const token = localStorage.getItem("authToken");
         const role = localStorage.getItem("userRole") || "student";
         const name = localStorage.getItem("userName") || "User";
@@ -113,40 +149,38 @@
         const desktopActions = document.getElementById("dynamicDesktopActions");
         const mobileActions = document.getElementById("dynamicMobileActions");
 
-       
+        // Highlighting tracking engine
         if (currentPath === "/" || currentPath === "/index.html") {
             document.getElementById("navHome")?.classList.add("active");
         } else if (currentPath === "/playground") {
             document.getElementById("navPlayground")?.classList.add("active");
         }
 
-       
-        const targetLi = document.createElement("li");
+        // 🟢 INJECT ROLE SPECIFIC TAB CONDITIONALLY
+        const appendLi = document.createElement("li");
         if (token) {
-            if (role.toLowerCase() === "teacher") {
-              
-                targetLi.innerHTML = `<a href="/create-test" class="nav-link ${currentPath === '/create-test' ? 'active' : ''}">Create Test</a>`;
+            if (role.trim().toLowerCase() === "teacher") {
+                appendLi.innerHTML = `<a href="/create-test" class="nav-link ${currentPath === '/create-test' ? 'active' : ''}">Create Test</a>`;
             } else {
-                
-                targetLi.innerHTML = `<a href="/ide" class="nav-link ${currentPath === '/ide' ? 'active' : ''}">coding Test</a>`;
+                appendLi.innerHTML = `<a href="/ide" class="nav-link ${currentPath === '/ide' ? 'active' : ''}">coding Test</a>`;
             }
         } else {
-            
-            targetLi.innerHTML = `<a href="/ide" class="nav-link ${currentPath === '/ide' ? 'active' : ''}">coding Test</a>`;
+            appendLi.innerHTML = `<a href="/ide" class="nav-link ${currentPath === '/ide' ? 'active' : ''}">coding Test</a>`;
         }
-        if (linksContainer) linksContainer.appendChild(targetLi);
+        if (linksContainer) linksContainer.appendChild(appendLi);
 
+        // 🟢 INJECT AUTH INTERFACES (Swaps out auth buttons dynamically)
         if (token) {
-            const userInitial = name.trim().charAt(0).toUpperCase();
-            const profileMenuMarkup = `
+            const avatarChar = name.trim().charAt(0).toUpperCase();
+            const profileDropdownStructure = `
                 <div class="user-profile-menu">
                     <div class="profile-avatar-trigger" id="profileTrigger">
-                        <div class="avatar-circle">${userInitial}</div>
+                        <div class="avatar-circle">${avatarChar}</div>
                     </div>
                     <div class="profile-dropdown-card" id="profileDropdown">
                         <div class="dropdown-header">
                             <h6>${name}</h6>
-                            <span class="user-role-badge">${role.toUpperCase()} ACCESS</span>
+                            <span class="user-role-badge">${role.toUpperCase()} LEVEL</span>
                         </div>
                         <hr class="dropdown-divider">
                         <button class="dropdown-logout-btn" id="btnLogoutAction">
@@ -155,11 +189,9 @@
                     </div>
                 </div>
             `;
-            
-            if (desktopActions) desktopActions.innerHTML = profileMenuMarkup;
-            if (mobileActions) mobileActions.innerHTML = profileMenuMarkup;
+            if (desktopActions) desktopActions.innerHTML = profileDropdownStructure;
+            if (mobileActions) mobileActions.innerHTML = profileDropdownStructure;
 
-            
             const trigger = document.getElementById("profileTrigger");
             const dropdown = document.getElementById("profileDropdown");
             if (trigger && dropdown) {
@@ -170,12 +202,11 @@
                 document.addEventListener("click", () => dropdown.classList.remove("show"));
             }
 
-           
             const logoutBtn = document.getElementById("btnLogoutAction");
             if (logoutBtn) {
                 logoutBtn.addEventListener("click", function() {
                     if (pageLoader && loaderText) {
-                        loaderText.innerText = "De-allocating Session Memory...";
+                        loaderText.innerText = "De-allocating Core Context Token...";
                         pageLoader.classList.add("active");
                     }
                     setTimeout(() => {
@@ -184,21 +215,18 @@
                     }, 600);
                 });
             }
-
         } else {
-            // Unauthenticated state buttons template
-            const loginButtons = `
+            const normalAuthButtons = `
                 <a href="/signin" class="btn-signin">Sign In</a>
                 <a href="/signup" class="btn-signup">Sign Up</a>
             `;
-            if (desktopActions) desktopActions.innerHTML = loginButtons;
-            if (mobileActions) mobileActions.innerHTML = loginButtons;
+            if (desktopActions) desktopActions.innerHTML = normalAuthButtons;
+            if (mobileActions) mobileActions.innerHTML = normalAuthButtons;
         }
 
-        
+        // Mobile Burger Menu Handler
         const navToggle = document.getElementById('navToggle');
         const navMenuWrapper = document.getElementById('navMenuWrapper');
-        
         if (navToggle && navMenuWrapper) {
             navToggle.addEventListener('click', function() {
                 navToggle.classList.toggle('active');
