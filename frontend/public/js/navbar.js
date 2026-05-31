@@ -1,20 +1,50 @@
+/**
+ * @file navbar.js
+ * @description Manages dynamic, role-based navigation generation, 
+ * user session verification, responsive mobile drawer hamburger events, 
+ * profile context dropdown actions, and log-out state mutations.
+ * 
+ * Loaded globally on all primary site layouts.
+ */
+
 document.addEventListener("DOMContentLoaded", () => {
-    // Loader removed: global page loader injection intentionally disabled.
-
-    // Navigation interception removed to avoid showing a global loader on link clicks.
-
+    
     // =========================================================================
-    // 3. DYNAMIC ROLE-BASED NAVBAR GENERATION
+    // DYNAMIC ROLE-BASED NAVBAR GENERATION
     // =========================================================================
+    
+    /**
+     * Target navbar element inside DOM.
+     * @type {HTMLElement|null}
+     */
     const navbarTarget = document.querySelector(".custom-navbar");
     if (!navbarTarget) return;
 
+    /**
+     * Authentication metadata retrieved from localStorage.
+     * @type {string|null}
+     */
     const token = localStorage.getItem("authToken");
+    
+    /**
+     * User platform level permission access context.
+     * @type {string}
+     */
     const role = localStorage.getItem("userRole") || "student";
+    
+    /**
+     * User identity name.
+     * @type {string}
+     */
     const name = localStorage.getItem("userName") || "User";
+    
+    /**
+     * Active browser path location.
+     * @type {string}
+     */
     const currentPath = window.location.pathname;
 
-    // Conditionally configure core center navigation links based on server role
+    // Conditionally configure core center navigation links based on user credentials
     let centerLinks = `<li><a href="/" class="nav-link ${currentPath === '/' ? 'active' : ''}">Home</a></li>`;
     centerLinks += `<li><a href="/playground" class="nav-link ${currentPath === '/playground' ? 'active' : ''}">playground</a></li>`;
 
@@ -28,11 +58,12 @@ document.addEventListener("DOMContentLoaded", () => {
         centerLinks += `<li><a href="/ide" class="nav-link ${currentPath === '/ide' ? 'active' : ''}">coding Test</a></li>`;
     }
 
-    // Configure right-side auth action templates
+    // Configure right-side session actions (Dropdown vs Sign In controls)
     let rightActionsHTML = "";
     let mobileActionsHTML = "";
 
     if (token) {
+        // Create gorgeous uppercase avatar characters based on profile metadata
         const initialChar = name.trim().charAt(0).toUpperCase();
         const dropdownStructure = `
             <div class="user-profile-menu">
@@ -64,7 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
         mobileActionsHTML = rightActionsHTML;
     }
 
-    // Overwrite navbar inner markup structures cleanly
+    // Populate actual modular container templates safely
     navbarTarget.innerHTML = `
         <div class="nav-container">
             <a class="nav-brand" href="/">
@@ -87,7 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
     `;
 
-    // Re-attach responsive mobile navigation hamburger links drawer triggers
+    // Initialize responsive hamburger menus
     const navToggle = document.getElementById("navToggle");
     const navMenuWrapper = document.getElementById("navMenuWrapper");
     if (navToggle && navMenuWrapper) {
@@ -97,27 +128,29 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Attach Avatar profile dropdown card toggles and logout tracking rules
+    // Setup interactive profile dropdown cards if authenticated
     if (token) {
-        // Toggle dropdown locally inside the parent menu on trigger click
+        /**
+         * Global click listener to track local user dropdown events.
+         */
         document.addEventListener("click", (e) => {
             const trigger = e.target.closest(".profile-avatar-trigger");
             if (trigger) {
                 e.stopPropagation();
                 
-                // Find local dropdown card (supports multiple instances like desktop + mobile)
+                // Fetch surrounding dropdown cards (supporting both Desktop and responsive views)
                 const menu = trigger.closest(".user-profile-menu");
                 const dropdown = menu?.querySelector(".profile-dropdown-card");
                 
                 if (dropdown) {
                     const isShown = dropdown.classList.contains("show");
                     
-                    // Close all profile dropdowns first
+                    // Close all active dropdown elements first
                     document.querySelectorAll(".profile-dropdown-card.show").forEach((d) => {
                         d.classList.remove("show");
                     });
                     
-                    // Toggle local dropdown state
+                    // Toggle targeted dropdown
                     if (!isShown) {
                         dropdown.classList.add("show");
                     }
@@ -125,7 +158,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            // Close all open dropdowns on clicking anywhere outside
+            // Close all active elements if clicking anywhere outside profile triggers
             if (!e.target.closest(".user-profile-menu")) {
                 document.querySelectorAll(".profile-dropdown-card.show").forEach((d) => {
                     d.classList.remove("show");
@@ -133,8 +166,11 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
-        // Wire delegated handlers for Profile and Log Out actions globally (robust and simple)
+        /**
+         * Global delegated click handlers for Dropdown Profile & Session Logouts.
+         */
         document.addEventListener("click", (e) => {
+            // Check view profile trigger
             const profileBtn = e.target.closest(".dropdown-profile-btn");
             if (profileBtn) {
                 e.stopPropagation();
@@ -143,10 +179,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
+            // Check session log out trigger
             const logoutBtn = e.target.closest(".dropdown-logout-btn");
             if (logoutBtn) {
                 e.stopPropagation();
-                localStorage.clear();
+                localStorage.clear(); // Clear all user tokens and keys
                 window.location.href = "/signin";
                 return;
             }

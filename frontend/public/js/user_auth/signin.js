@@ -1,22 +1,48 @@
+/**
+ * @file signin.js
+ * @description Manages student and teacher platform credential authorization,
+ * tab state updates, REST API endpoint communications, and user metadata caching.
+ * 
+ * Used in:
+ * - /pages/user_auth/signin.html
+ */
+
 document.addEventListener("DOMContentLoaded", () => {
+    /**
+     * Sign In Form element reference in DOM.
+     * @type {HTMLFormElement|null}
+     */
     const signinForm = document.getElementById("formSignin");
+
+    /**
+     * Auth action submit button reference in DOM.
+     * @type {HTMLButtonElement|null}
+     */
     const submitBtn = document.getElementById("btnSubmitSignin");
 
     if (signinForm) {
+        /**
+         * Intercepts form submissions and triggers backend authorization queries.
+         */
         signinForm.addEventListener("submit", async (e) => {
             e.preventDefault();
 
+            /** @type {HTMLInputElement|null} */
             const emailField = document.getElementById("signinEmail");
+            
+            /** @type {HTMLInputElement|null} */
             const passwordField = document.getElementById("signinPassword");
 
             if (!emailField || !passwordField) return;
 
+            // Determine active persona tab context (defaults to student)
             let currentRole = "student";
             const teacherTab = document.getElementById("btnTabTeacher");
             if (teacherTab && teacherTab.classList.contains("active")) {
                 currentRole = "teacher";
             }
 
+            // Construct payload configuration object
             const payload = {
                 email: emailField.value.trim(),
                 password: passwordField.value,
@@ -24,11 +50,13 @@ document.addEventListener("DOMContentLoaded", () => {
             };
 
             try {
+                // Disable interface triggers and show loading animation text
                 if (submitBtn) {
                     submitBtn.disabled = true;
                     submitBtn.innerText = "Signing in...";
                 }
 
+                // Query authorization token from backend REST endpoint
                 const response = await fetch("/signin", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -38,18 +66,21 @@ document.addEventListener("DOMContentLoaded", () => {
                 const data = await response.json();
                 if (!response.ok) throw new Error(data.error || "Authentication refused.");
 
-                // Save user metadata 
+                // Persist authentication tokens and user attributes locally
                 localStorage.setItem("authToken", data.token);
                 localStorage.setItem("userRole", data.role);
                 localStorage.setItem("userName", data.name);
 
                 if (submitBtn) submitBtn.innerText = "Signed in";
-                // Redirect based on role (server-provided role preferred)
+                
+                // Navigate users based on permission levels (Teachers are sent to test configuration dashboards, students to compiler labs)
                 const roleAfter = (data.role || currentRole || '').toString().toLowerCase();
                 const dest = roleAfter === 'teacher' ? '/create-test' : '/ide';
+                
                 setTimeout(() => window.location.href = dest, 600);
 
             } catch (err) {
+                // Restore button triggers and notify user of auth exceptions
                 if (submitBtn) {
                     submitBtn.disabled = false;
                     submitBtn.innerText = "Sign In";
