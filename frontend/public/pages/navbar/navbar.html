@@ -111,16 +111,18 @@
   </body>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    // 🟢 FORCE IMMEDIATE AUTH LOGIC TO RUN LIVE WITHOUT WAITING FOR DOM LOAD
+    (function () {
         const pageLoader = document.getElementById("globalPageLoader");
         const loaderText = document.getElementById("globalLoaderText");
 
+        // Hide loader overlay smoothly after resource tracking finishes
         setTimeout(() => {
             if (pageLoader) pageLoader.classList.remove("active");
-        }, 350);
+        }, 300);
 
-        // Global Action Interceptor for domino loaders
-        document.addEventListener("click", function(e) {
+        // Global link redirect lag interceptor
+        document.addEventListener("click", function (e) {
             const anchor = e.target.closest("a");
             if (!anchor) return;
 
@@ -139,7 +141,7 @@
             }
         });
 
-        // Parse Token Profiles from browser session state
+        // Parse memory session parameters
         const token = localStorage.getItem("authToken");
         const role = localStorage.getItem("userRole") || "student";
         const name = localStorage.getItem("userName") || "User";
@@ -149,30 +151,28 @@
         const desktopActions = document.getElementById("dynamicDesktopActions");
         const mobileActions = document.getElementById("dynamicMobileActions");
 
-        // Highlighting tracking engine
+        // Set highlight states based on current path coordinates
         if (currentPath === "/" || currentPath === "/index.html") {
             document.getElementById("navHome")?.classList.add("active");
         } else if (currentPath === "/playground") {
             document.getElementById("navPlayground")?.classList.add("active");
         }
 
-        // 🟢 INJECT ROLE SPECIFIC TAB CONDITIONALLY
-        const appendLi = document.createElement("li");
-        if (token) {
-            if (role.trim().toLowerCase() === "teacher") {
-                appendLi.innerHTML = `<a href="/create-test" class="nav-link ${currentPath === '/create-test' ? 'active' : ''}">Create Test</a>`;
+        // Inject path tabs conditionally based on user role
+        if (linksContainer) {
+            let roleTabHTML = "";
+            if (token && role.trim().toLowerCase() === "teacher") {
+                roleTabHTML = `<li><a href="/create-test" class="nav-link ${currentPath === '/create-test' ? 'active' : ''}">Create Test</a></li>`;
             } else {
-                appendLi.innerHTML = `<a href="/ide" class="nav-link ${currentPath === '/ide' ? 'active' : ''}">coding Test</a>`;
+                roleTabHTML = `<li><a href="/ide" class="nav-link ${currentPath === '/ide' ? 'active' : ''}">coding Test</a></li>`;
             }
-        } else {
-            appendLi.innerHTML = `<a href="/ide" class="nav-link ${currentPath === '/ide' ? 'active' : ''}">coding Test</a>`;
+            linksContainer.insertAdjacentHTML("beforeend", roleTabHTML);
         }
-        if (linksContainer) linksContainer.appendChild(appendLi);
 
-        // 🟢 INJECT AUTH INTERFACES (Swaps out auth buttons dynamically)
+        // Swap out access buttons if an active token is detected
         if (token) {
             const avatarChar = name.trim().charAt(0).toUpperCase();
-            const profileDropdownStructure = `
+            const dropdownMarkup = `
                 <div class="user-profile-menu">
                     <div class="profile-avatar-trigger" id="profileTrigger">
                         <div class="avatar-circle">${avatarChar}</div>
@@ -189,50 +189,57 @@
                     </div>
                 </div>
             `;
-            if (desktopActions) desktopActions.innerHTML = profileDropdownStructure;
-            if (mobileActions) mobileActions.innerHTML = profileDropdownStructure;
 
-            const trigger = document.getElementById("profileTrigger");
-            const dropdown = document.getElementById("profileDropdown");
-            if (trigger && dropdown) {
-                trigger.addEventListener("click", function(e) {
-                    e.stopPropagation();
-                    dropdown.classList.toggle("show");
-                });
-                document.addEventListener("click", () => dropdown.classList.remove("show"));
-            }
+            if (desktopActions) desktopActions.innerHTML = dropdownMarkup;
+            if (mobileActions) mobileActions.innerHTML = dropdownMarkup;
 
-            const logoutBtn = document.getElementById("btnLogoutAction");
-            if (logoutBtn) {
-                logoutBtn.addEventListener("click", function() {
-                    if (pageLoader && loaderText) {
-                        loaderText.innerText = "De-allocating Core Context Token...";
-                        pageLoader.classList.add("active");
-                    }
-                    setTimeout(() => {
-                        localStorage.clear();
-                        window.location.href = "/signin";
-                    }, 600);
-                });
-            }
+            // Handle user profile card trigger toggles
+            setTimeout(() => {
+                const trigger = document.getElementById("profileTrigger");
+                const dropdown = document.getElementById("profileDropdown");
+                if (trigger && dropdown) {
+                    trigger.addEventListener("click", function (e) {
+                        e.stopPropagation();
+                        dropdown.classList.toggle("show");
+                    });
+                    document.addEventListener("click", () => dropdown.classList.remove("show"));
+                }
+
+                const logoutBtn = document.getElementById("btnLogoutAction");
+                if (logoutBtn) {
+                    logoutBtn.addEventListener("click", function () {
+                        if (pageLoader && loaderText) {
+                            loaderText.innerText = "Terminating Environment Token...";
+                            pageLoader.classList.add("active");
+                        }
+                        setTimeout(() => {
+                            localStorage.clear();
+                            window.location.href = "/signin";
+                        }, 600);
+                    });
+                }
+            }, 100);
+
         } else {
-            const normalAuthButtons = `
+            const staticButtons = `
                 <a href="/signin" class="btn-signin">Sign In</a>
                 <a href="/signup" class="btn-signup">Sign Up</a>
             `;
-            if (desktopActions) desktopActions.innerHTML = normalAuthButtons;
-            if (mobileActions) mobileActions.innerHTML = normalAuthButtons;
+            if (desktopActions) desktopActions.innerHTML = staticButtons;
+            if (mobileActions) mobileActions.innerHTML = staticButtons;
         }
 
-        // Mobile Burger Menu Handler
-        const navToggle = document.getElementById('navToggle');
-        const navMenuWrapper = document.getElementById('navMenuWrapper');
-        if (navToggle && navMenuWrapper) {
-            navToggle.addEventListener('click', function() {
-                navToggle.classList.toggle('active');
-                navMenuWrapper.classList.toggle('active');
-            });
-        }
-    });
+        // Handle mobile sidebar menu responsive drawer burger actions
+        setTimeout(() => {
+            const navToggle = document.getElementById('navToggle');
+            const navMenuWrapper = document.getElementById('navMenuWrapper');
+            if (navToggle && navMenuWrapper) {
+                navToggle.addEventListener('click', function () {
+                    navToggle.classList.toggle('active');
+                    navMenuWrapper.classList.toggle('active');
+                });
+            }
+        }, 100);
+    })();
 </script>
 </html>
